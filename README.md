@@ -18,7 +18,7 @@ CompiladorNavideño es un proyecto enfocado en el desarrollo de un compilador e 
 ## Para Ejecutar el Proyecto
 
 ```bash
-mvn clean compile exec:java
+mvn clean jflex:generate compile exec:java
 ```
 
 ## Estructura del Repositorio
