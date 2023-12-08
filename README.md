@@ -14,6 +14,10 @@ Bienvenidos al repositorio de CompiladorNavideño, un proyecto desarrollado como
 ## Acerca del Proyecto
 
 CompiladorNavideño es un proyecto enfocado en el desarrollo de un compilador e intérprete con un enfoque navideño. El objetivo es aprender y aplicar los conceptos fundamentales de la compilación y la interpretación de lenguajes de programación se utiliza Cup y Jflex.
+## Primeramente ejecutar lo siguiente 
+```bash
+mvn clean install
+```
 
 ## Para Ejecutar el Proyecto
 
