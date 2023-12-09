@@ -1,10 +1,6 @@
-// Operaciones binarias - Renos de santa
-
-terminal RODOLFO, TRUENO, RELAMPAGO, COMETA, CUPIDO, BAILARIN, SALTARIN, ZALAMERO, ACROBATICO;
 import java_cup.runtime.*;
 
 action code {:
-  // Any Java code to be added to the action class should go here.
   public void hola() {
     System.out.println("Hola");
   }
@@ -20,17 +16,78 @@ parser code {:
     this.lex = lex;
     this.symbolFactory = new DefaultSymbolFactory();
   }
-
 :}
-
-scan with {: return lex.next_token(); :};
 init with {: :};
 
-// terminales de renos de Santa 🦌🦌🦌🦌🦌🦌🦌🦌
-terminal PLUS, MINUS, NUMBER, GOATED, IDENTIFIER;
-terminal RODOLFO, TRUENO, RELAMPAGO, RAYO, DANZARIN, SALTARIN, COMETA;
-non terminal navidad;
+scan with {: return lex.next_token(); :};
 
-start with navidad;
+/* Terminales (tokens retornados por el scanner) */
 
-navidad ::= {: hola(); :} IDENTIFIER {: adios(); :};
+/* Definición de tokens con temática navideña */
+
+/* keyword */
+terminal  NAVIDAD, FESTIVAL, FIESTA; // abstract, public, private
+
+// Operadores aritméticos binarios: nombres de renos
+terminal RODOLFO, TRUENO, RELAMPAGO, RAYO, DANZARIN, SALTARIN, COMETA; // +, -, *, /, %, **, //
+
+// Operadores aritméticos unarios: grinch, quien
+terminal GRINCH, QUIEN; // -, +
+
+// Operadores relacionales: elfos de santa
+terminal ELFO_MAYOR, ELFO_MENOR, ELFO_IGUAL, ELFO_NO_IGUAL, ELFO_MAYOR_IGUAL, ELFO_MENOR_IGUAL; // >, <, ==, !=, >=, <=
+
+// Operadores lógicos: reyes magos
+terminal REY_MELCHOR, REY_GASPAR, REY_BALTASAR; // &&, ||, !
+
+// identificador: persona
+terminal Persona; // Identificador (nombre de variable, función, etc.)
+
+// tipos: nombres de papá noel
+terminal COLACHO, SANTA, ; // Tipos de datos (int, string, etc.)
+
+// literales (valorar caso especial bool): nombres de papá noel con un prefijo l_
+terminal L_VERDADERO, L_FALSO; // true, false
+
+// paréntesis: abrecuento, cierrecuento
+terminal ABRECUENTO, CIERRECUENTO; // (, )
+
+// paréntesis cuadrado: abreempaque, cierraempaque
+terminal ABREEMPAQUE, CIERRAEMPAQUE; // [, ]
+
+// llaves: abreregalo, cierraregalo
+terminal ABREREGALO, CIERRAREGALO; // {, }
+
+// lexemas de estructuras de control: elfo, hada, duende, envuelve, hace, revisa, envia, corta
+terminal ELFO, HADA, DUENDE, ENVUELVE, HACE, REVISA, ENVIA, CORTA; // if, else, for, while, do, switch, return, break
+
+// print, read: narra, escucha
+terminal NARRA, ESCUCHA; // print, read
+
+// lexema de fin de expresión: finregalo
+terminal FINREGALO; // ;
+
+// lexema de asignar: entrega
+terminal ENTREGA; // =
+
+// lexema separador: separador
+terminal SEPARADOR; // ,
+
+
+/* Otros para Lexer */
+terminal BREAK, BOOLEAN;
+
+/* No terminales */
+non terminal SantaScript;
+
+// Producción de inicio
+startwith SantaScript;
+
+SantaScript ::= {:
+                    hola(); 
+                :} 
+                IDENTIFICADOR 
+                {: 
+                    adios(); 
+                :}
+                ;
