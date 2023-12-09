@@ -1,101 +1,49 @@
-/*
- * JFlex example from the user Manual
- *
- * Copyright 2020, Gerwin Klein, Régis Décamps, Steve Rowe
- * SPDX-License-Identifier: GPL-2.0-only
- */
+/* JFlex example: partial Java language lexer specification */
+    package com.navidad;
+    import java_cup.runtime.*;
 
-package jflex.com.navidad;
+    %%
 
-import java_cup.runtime.Symbol;
+    %class Lexer
+    %unicode
+    %cup
+    %line
+    %column
 
-/** Lexer of a very minimal version of the Java programming language. */
+    SUM = \+
+    DECREASE = \- 
+    FLOAT_DIVISION = \/\/
+    INT_DIVISION = \/
+    ELEVATE = \*\*
+    PRODUCT = \*
+    MODULE = \~
+   
 
-%%
+    DIGIT = [0-9]
+    NUMBER = {DIGIT}+
 
-%public
-%class Lexer
-%unicode
-%cup
-%line
-%column
-%throws UnknownCharacterException
+    LETTER = [a-zA-Z]
+    PERSONA = [:jletter:] [:jletterdigit:]*
 
-%{
-  StringBuffer string = new StringBuffer();
+    
+    %%
 
-  private Symbol symbol(int type) {
-    return new Symbol(type, yyline, yycolumn);
-  }
-  private Symbol symbol(int type, Object value) {
-    return new Symbol(type, yyline, yycolumn, value);
-  }
-%}
-
-
-LineTerminator = \r|\n|\r\n
-InputCharacter = [^\r\n]
-WhiteSpace     = {LineTerminator} | [ \t\f]
-
-/* comments */
-Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
-
-TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-// Comment can be the last line of the file, without line terminator.
-EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
-DocumentationComment = "/**" {CommentContent} "*"+ "/"
-CommentContent       = ( [^*] | \*+ [^/*] )*
-
-Identifier = [:jletter:] [:jletterdigit:]*
-
-DecIntegerLiteral = 0 | [1-9][0-9]*
-
-
-%state STRING
-
-%%
-
-
-/* keywords */
-<YYINITIAL> "abstract"           { return symbol(sym.ABSTRACT); }
-<YYINITIAL> "boolean"            { return symbol(sym.BOOLEAN); }
-<YYINITIAL> "break"              { return symbol(sym.BREAK); }
-
-
-<YYINITIAL> {
-  /* identifiers */
-  {Identifier}                   { return symbol(sym.IDENTIFIER); }
-
-  /* literals */
-  {DecIntegerLiteral}            { return symbol(sym.INTEGER_LITERAL); }
-  \"                             { string.setLength(0); yybegin(STRING); }
-
-  /* operators */
-  "="                            { return symbol(sym.EQ); }
-  "=="                           { return symbol(sym.EQEQ); }
-  "+"                            { return symbol(sym.PLUS); }
-
-  /* comments */
-  {Comment}                      { /* ignore */ }
-
-  /* whitespace */
-  {WhiteSpace}                   { /* ignore */ }
-}
-
-
-<STRING> {
-  \"                             { yybegin(YYINITIAL);
-                                   return symbol(sym.STRING_LITERAL,
-                                   string.toString()); }
-  [^\n\r\"\\]+                   { string.append( yytext() ); }
-  \\t                            { string.append('\t'); }
-  \\n                            { string.append('\n'); }
-
-  \\r                            { string.append('\r'); }
-  \\\"                           { string.append('\"'); }
-  \\                             { string.append('\\'); }
-}
-
-
-/* error fallback */
-[^]                              { throw new UnknownCharacterException(yytext()); }
+    <YYINITIAL> {
+    
+    {SUM} { return new Symbol(sym.RODOLFO, yytext()); }
+    {DECREASE} { return new Symbol(sym.TRUENO, yytext()); }
+    {FLOAT_DIVISION} { return new Symbol(sym.RELAMPAGO, yytext()); }
+    {INT_DIVISION} { return new Symbol(sym.RAYO, yytext()); }
+    {ELEVATE} { return new Symbol(sym.SALTARIN, yytext()); }
+    {PRODUCT} { return new Symbol(sym.COMETA, yytext()); }
+    {MODULE} { return new Symbol(sym.CUPIDO, yytext()); }
+    
+    }
+    /*
+    {NUMBER} { return new Symbol(sym.NUMBER, new Integer(yytext())); }
+    {LETTER} { return new Symbol(sym.LETTER, new String(yytext()));
+    {ID} { return new Symbol(sym.ID, new String(yytext())); }
+    . { System.err.println("Illegal character: "+yytext()); }
+    \n { return new Symbol(sym.EOL); }
+    <<EOF>> { return new Symbol(sym.EOF); }
+    */

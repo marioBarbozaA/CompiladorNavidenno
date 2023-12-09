@@ -1,5 +1,5 @@
 package com.navidad;
-
+import java_cup.runtime.*;
 /**
  * Hello world!
  *
