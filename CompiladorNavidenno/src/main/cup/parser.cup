@@ -1,3 +1,36 @@
 // Operaciones binarias - Renos de santa
 
 terminal RODOLFO, TRUENO, RELAMPAGO, COMETA, CUPIDO, BAILARIN, SALTARIN, ZALAMERO, ACROBATICO;
+import java_cup.runtime.*;
+
+action code {:
+  // Any Java code to be added to the action class should go here.
+  public void hola() {
+    System.out.println("Hola");
+  }
+  public void adios() {
+    System.out.println("Adios");
+  }
+:}
+
+parser code {:
+  Lexer lex;
+
+  public parser(Lexer lex) {
+    this.lex = lex;
+    this.symbolFactory = new DefaultSymbolFactory();
+  }
+
+:}
+
+scan with {: return lex.next_token(); :};
+init with {: :};
+
+// terminales de renos de Santa 🦌🦌🦌🦌🦌🦌🦌🦌
+terminal PLUS, MINUS, NUMBER, GOATED, IDENTIFIER;
+terminal RODOLFO, TRUENO, RELAMPAGO, RAYO, DANZARIN, SALTARIN, COMETA;
+non terminal navidad;
+
+start with navidad;
+
+navidad ::= {: hola(); :} IDENTIFIER {: adios(); :};
