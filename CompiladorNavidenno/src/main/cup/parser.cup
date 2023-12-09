@@ -86,7 +86,7 @@ terminal BREAK, BOOLEAN;
 non terminal SantaScript;
 
 // Producción de inicio
-startwith SantaScript;
+start with SantaScript;
 
 SantaScript ::= {:
                     hola(); 

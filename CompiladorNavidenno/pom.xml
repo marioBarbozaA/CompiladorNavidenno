@@ -41,13 +41,7 @@
             <artifactId>jflex</artifactId>
             <version>1.9.1</version>
         </dependency>
-        
-        <!-- Apache Avro -->
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>1.9.0</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -116,8 +110,6 @@
                     <version>1.9.1</version>
                     <executions>
                         <execution>
-                            <id>jflex-generate</id>
-                            <phase>generate-sources</phase>
                             <goals>
                                 <goal>generate</goal>
                             </goals>
