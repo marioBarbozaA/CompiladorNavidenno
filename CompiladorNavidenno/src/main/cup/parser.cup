@@ -31,7 +31,7 @@ init with {: :};
 terminal RODOLFO, TRUENO, RELAMPAGO, RAYO, SALTARIN, COMETA, CUPIDO; // +, -, //, /, **, *, ~(%) 
 // identificador: persona
 terminal PERSONA; // Identificador (nombre de variable, función, etc.)
-/*
+
 // Operadores aritméticos unarios: grinch, quien
 terminal GRINCH, QUIEN; // -, +
 
@@ -46,7 +46,7 @@ terminal REY_MELCHOR, REY_GASPAR, REY_BALTASAR; // &&, ||, !
 // tipos: nombres de papá noel
 terminal COLACHO, SANTA; // Tipos de datos (int, string, etc.)
 
-/* keyword 
+/* keyword */
 terminal  NAVIDAD, FESTIVAL, FIESTA; // Tipado de atributos y metodos abstract, public, private
 
 // literales (valorar caso especial bool): nombres de papá noel con un prefijo l_
@@ -79,9 +79,9 @@ terminal SEPARADOR; // ,
 //lexema de null
 terminal CARBON; // null
 
-/* Otros para Lexer 
+/* Otros para Lexer */
 terminal BREAK, BOOLEAN;
-*/
+
 // No terminales 
 non terminal SantaScript;
 
