@@ -14,7 +14,9 @@ Bienvenidos al repositorio de CompiladorNavideño, un proyecto desarrollado como
 ## Acerca del Proyecto
 
 CompiladorNavideño es un proyecto enfocado en el desarrollo de un compilador e intérprete con un enfoque navideño. El objetivo es aprender y aplicar los conceptos fundamentales de la compilación y la interpretación de lenguajes de programación se utiliza Cup y Jflex.
-## Primeramente ejecutar lo siguiente 
+
+## Primeramente ejecutar lo siguiente
+
 ```bash
 mvn clean install
 ```
@@ -31,4 +33,9 @@ mvn clean jflex:generate compile exec:java
 
 ---
 
-¡Esperamos que este proyecto sea de gran aprendizaje!
+## Documentación
+
+- [Manual de Usuario](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/EfrZ9TDNVWZEoYgB_CFyBZUBZwBYiqD57aSG613BG2nibg?e=SZos6m)
+- [Manual Técnico](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/ESx-10rDiJpIvjpgLJcLQN4BtVUYWFgR-Yc5v6UMVOg9qw?e=PBd1UD)
+
+  ¡Esperamos que este proyecto sea de gran aprendizaje!
