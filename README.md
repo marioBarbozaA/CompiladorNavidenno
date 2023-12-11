@@ -38,7 +38,7 @@ mvn clean cup:generate jflex:generate compile exec:java
 > something important
 ## Documentación
 
-- [Manual de Usuario](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/EfrZ9TDNVWZEoYgB_CFyBZUBZwBYiqD57aSG613BG2nibg?e=SZos6m)
-- [Manual Técnico](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/ESx-10rDiJpIvjpgLJcLQN4BtVUYWFgR-Yc5v6UMVOg9qw?e=PBd1UD)
+- [Manual de Usuario](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/EfrZ9TDNVWZEoYgB_CFyBZUBpNYCSIv7tlmb4lqqqxJy5w?e=SgWaTk)
+- [Manual Técnico](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/ESx-10rDiJpIvjpgLJcLQN4BNZPN5n5n7VVG9ZPT7pScbg?e=UmSGwh)
 
   ¡Esperamos que este proyecto sea de gran aprendizaje!
