@@ -12,14 +12,47 @@ import java.util.List;
 %line
 %column
 
+//Inicio de las expresiones regulares
+
+//Expresiones binarias
 SUM = \+
 DECREASE = \- 
-FLOAT_DIVISION = \/\/
-INT_DIVISION = \/
+FLOAT_DIVISION = \/
+INT_DIVISION = \/\/
 ELEVATE = \*\*
 PRODUCT = \*
 MODULE = \~
    
+//Expresiones unarias
+
+DECREMENT = \-\-
+INCREMENT = \+\+
+
+//Expresiones relacionales
+EQUAL = \=\=\=
+NOT_EQUAL = \!\=\=
+GREATER = \>
+LESS = \<
+GREATER_EQUAL = \=\=\>
+LESS_EQUAL = \=\=\<
+
+//Expresiones logicas
+
+DISJUNCTION = \#
+COJUNCTION = \^
+NOT = \!
+
+// Expresion de control de bloques
+OPEN_PARENTHESIS = \(
+CLOSE_PARENTHESIS = \)
+OPEN_BRACKET = \[
+CLOSE_BRACKET = \]
+OPEN_BRACE = \{
+CLOSE_BRACE = \}
+ASSIGNTMENT = \<\= // e.g: a <= 10 
+PIPE_DELIMITER = \| // a <= 10 |
+
+//Expresiones de comentarios
 
 DIGIT = [0-9]
 NUMBER = {DIGIT}

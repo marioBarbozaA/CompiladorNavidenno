@@ -713,7 +713,7 @@ class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 10: break;
           case 4:
-            { return new Symbol(sym.RAYO, yytext());
+            { return new Symbol(sym.RELAMPAGO, yytext());
             }
           // fall through
           case 11: break;
@@ -728,7 +728,7 @@ class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 13: break;
           case 7:
-            { return new Symbol(sym.RELAMPAGO, yytext());
+            { return new Symbol(sym.RAYO, yytext());
             }
           // fall through
           case 14: break;
