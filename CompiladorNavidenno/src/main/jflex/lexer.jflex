@@ -52,19 +52,23 @@ CLOSE_BRACE = \}
 ASSIGNTMENT = \<\= // e.g: a <= 10 
 PIPE_DELIMITER = \| // a <= 10 |
 
+//Expresiones de terminacion de linea
+END_LINE = [\r] | (\r\n|\r|\n) | [\n]
+//Expresiones de espacios en vacíos
+EMPTY_SPACE = [ \t]* | {END_LINE}
+
 //Expresiones de comentarios
-EMPTY_SPACE = [ \t]
-END_LINE = [\r]
-LINE_COMMENT = \/\*.*\*\/
-BLOCK_COMMENT = \/\*.*\*\/
+LINE_COMMENT = "@" ^{END_LINE}* {END_LINE}? // e.g: @ This is a comment
+MULTI_lINE_COMMENT = "\/_" [^\_] "\_/" | "\/_" "\_" + "/" // e.g: /_ This is a comment _/
+FULL_COMMENT = {LINE_COMMENT} | {MULTI_lINE_COMMENT} // e.g: @ This is a comment or /_ This is a comment _/
 
 //Expresiones de Números e identificadores
 DIGIT = [0-9]
-NUMBER = {DIGIT}
+INT_NUMBER = 0 | -?[1-9]{DIGIT}*
 
 LETTER = [a-zA-Z]
-PERSONA = [a-zA-Z][a-zA-Z0-9]*
-
+PERSONA = {LETTER}[{LETTER}{DIGIT}]*
+FLOATING_NUMBER = {INT_NUMBER}*\.{DIGIT}+ // e.g: 1.0e-10
 
     
 %%
