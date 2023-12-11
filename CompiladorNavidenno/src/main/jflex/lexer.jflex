@@ -12,6 +12,9 @@ import java.util.List;
 %line
 %column
 
+//Inicio de las expresiones regulares
+
+//Expresiones binarias
 SUM = \+
 DECREASE = \- 
 FLOAT_DIVISION = \/\/
@@ -20,6 +23,37 @@ ELEVATE = \*\*
 PRODUCT = \*
 MODULE = \~
    
+//Expresiones unarias
+// REVISAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+NEGATIVE = \-
+POSITIVE = \+
+
+//Expresiones relacionales
+EQUAL = \=\=\=
+NOT_EQUAL = \!\=\=
+GREATER = \>
+LESS = \<
+// HAY QUE REVISAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+GREATER_EQUAL = \=\=\>
+LESS_EQUAL = \=\=\<
+
+//Expresiones logicas
+
+DISJUNCTION = \#
+COJUNCTION = \^
+NOT = \!
+
+// Expresion de control de bloques
+OPEN_PARENTHESIS = \(
+CLOSE_PARENTHESIS = \)
+OPEN_BRACKET = \[
+CLOSE_BRACKET = \]
+OPEN_BRACE = \{
+CLOSE_BRACE = \}
+ASSIGNTMENT = \<\=
+PIPE_DELIMITER = \|
+
+//Expresiones de comentarios
 
 DIGIT = [0-9]
 NUMBER = {DIGIT}
