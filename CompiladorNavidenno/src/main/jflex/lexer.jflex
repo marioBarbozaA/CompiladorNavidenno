@@ -17,23 +17,22 @@ import java.util.List;
 //Expresiones binarias
 SUM = \+
 DECREASE = \- 
-FLOAT_DIVISION = \/\/
-INT_DIVISION = \/
+FLOAT_DIVISION = \/
+INT_DIVISION = \/\/
 ELEVATE = \*\*
 PRODUCT = \*
 MODULE = \~
    
 //Expresiones unarias
-// REVISAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-NEGATIVE = \-
-POSITIVE = \+
+
+DECREMENT = \-\-
+INCREMENT = \+\+
 
 //Expresiones relacionales
 EQUAL = \=\=\=
 NOT_EQUAL = \!\=\=
 GREATER = \>
 LESS = \<
-// HAY QUE REVISAR ESTAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 GREATER_EQUAL = \=\=\>
 LESS_EQUAL = \=\=\<
 
@@ -50,8 +49,8 @@ OPEN_BRACKET = \[
 CLOSE_BRACKET = \]
 OPEN_BRACE = \{
 CLOSE_BRACE = \}
-ASSIGNTMENT = \<\=
-PIPE_DELIMITER = \|
+ASSIGNTMENT = \<\= // e.g: a <= 10 
+PIPE_DELIMITER = \| // a <= 10 |
 
 //Expresiones de comentarios
 
