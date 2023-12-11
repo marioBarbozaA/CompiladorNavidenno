@@ -53,12 +53,18 @@ ASSIGNTMENT = \<\= // e.g: a <= 10
 PIPE_DELIMITER = \| // a <= 10 |
 
 //Expresiones de comentarios
+EMPTY_SPACE = [ \t]
+END_LINE = [\r]
+LINE_COMMENT = \/\*.*\*\/
+BLOCK_COMMENT = \/\*.*\*\/
 
+//Expresiones de Números e identificadores
 DIGIT = [0-9]
 NUMBER = {DIGIT}
 
 LETTER = [a-zA-Z]
 PERSONA = [a-zA-Z][a-zA-Z0-9]*
+
 
     
 %%
