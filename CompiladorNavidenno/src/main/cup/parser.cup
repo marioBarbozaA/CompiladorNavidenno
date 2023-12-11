@@ -61,10 +61,10 @@ terminal ABRE_EMPAQUE, CIERRA_EMPAQUE; // [, ]
 terminal ABRE_REGALO, CIERRA_REGALO; // {, }
 
 // lexemas de estructuras de control: elfo, hada, duende, envuelve, hace, revisa, envia, corta
-terminal ELFO, HADA, DUENDE, ENVUELVE, HACE, REVISA, ENVIA, CORTA; // if, else, for, while, do, switch, return, break
+terminal ELFO_IF, HADA_ELIF, DUENDE_ELSE, ENVUELVE_FOR, HACE_DO, REVISA_UNTIL, ENVIA_RETURN, CORTA_BREAK; // if, else, for, while, do, switch, return, break
 
 // print, read: narra, escucha
-terminal NARRA, ESCUCHA; // print, read No esta 
+terminal NARRA_PRINT, ESCUCHA_READ; // print, read No esta 
 
 // lexema de fin de expresión: finregalo
 terminal FIN_REGALO; // ;(|) Sirve para Finalizar 
@@ -76,7 +76,10 @@ terminal ENTREGA; // =    //ASSIGMENT <=
 terminal SEPARADOR; // , separa entre funciones, parametros, etc.
 
 //lexema de null
-terminal CARBON; // null No esta 
+terminal CARBON; // 
+
+//lexema de main
+terminaL ESTRELLA_MAIN;
 
 // No terminales 
 non terminal SantaScript;
