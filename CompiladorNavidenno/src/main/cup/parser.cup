@@ -43,13 +43,15 @@ terminal ELFO_GREATER, ELFO_LESS, ELFO_EQUAL, ELFO_NOT_EQUAL, ELFO_GREATER_EQUAL
 terminal REY_MELCHOR_COJUNCTION, REY_GASPAR_DISJUNCTION, REY_BALTASAR_NOT; // &&, ||, !
 
 // tipos: nombres de papá noel
-terminal COLACHO_INT,JOULUPUKKI_FLOAT, PAPA_NOEL_BOOLEAN,CLAUS_CHAR, SANTA_STRING, VIEJITO_PASCUERO_ARRAY; // Tipos de datos (int, string, BOOLEAN) todavia no esta 
+terminal COLACHO_INT,JOULUPUKKI_FLOAT, PAPA_NOEL_BOOLEAN, CLAUS_CHAR, SANTA_STRING, VIEJITO_PASCUERO_ARRAY; // Tipos de datos (int, string, BOOLEAN) todavia no esta 
 
+// tipos de datos literales
+terminal L_COLACHO_INT , L_JOULUPUKKI_FLOAT, L_PAPA_NOEL_BOOLEAN, L_CLAUS_CHAR, L_SANTA_STRING, L_VIEJITO_PASCUERO_ARRAY; // Tipos de datos literales (1, 1.0, true, 'a', "hola", [1,2,3]) todavia no esta
 /* keyword */
 terminal  NAVIDAD_ABSTRACT, FESTIVA_PUBLICL, FIESTA_PRIVATE; // Tipado de atributos y metodos abstract, public, private
 
 // literales (valorar caso especial bool): nombres de papá noel con un prefijo l_
-terminal L_VIEJITO_PASCUERO, L_JOULUPUKKI; // true, false Todavia no esta 
+terminal PAPA_NOEL_TRUE, PAPA_NOEL_FALSE; // true, false 
 
 // paréntesis: abrecuento, cierrecuento
 terminal ABRE_CUENTO, CIERRE_CUENTO; // (, )
@@ -79,7 +81,7 @@ terminal SEPARADOR; // , separa entre funciones, parametros, etc.
 terminal CARBON; // 
 
 //lexema de main
-terminaL ESTRELLA_MAIN;
+terminal ESTRELLA_MAIN;
 
 // No terminales 
 non terminal SantaScript;

@@ -1004,7 +1004,7 @@ class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 92: break;
           case 43:
-            { return new Symbol(sym.PAPA_NOEL_TRUE, "true");
+            { return new Symbol(sym.L_VIEJITO_PASCUERO, "true");
             }
           // fall through
           case 93: break;
@@ -1014,7 +1014,7 @@ class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 94: break;
           case 45:
-            { return new Symbol(sym.PAPA_NOEL_FALSE, "false");
+            { return new Symbol(sym.L_JOULUPUKKI, "false");
             }
           // fall through
           case 95: break;
