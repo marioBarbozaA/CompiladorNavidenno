@@ -21,8 +21,8 @@ public class App {
                 table.addRow(new String[]{ token.value.toString(),
                     sym.terminalNames[token.sym],
                     Integer.toString(token.sym),
-                    Integer.toString(token.left),
-                    Integer.toString(token.right)
+                    Integer.toString(token.left+1),
+                    Integer.toString(token.right+1)
                 });
                 System.out.println("Token: " + token.sym + " " + sym.terminalNames[token.sym] + " " + token.value);
             }

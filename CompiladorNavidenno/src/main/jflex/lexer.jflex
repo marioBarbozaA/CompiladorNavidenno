@@ -16,11 +16,11 @@ import java.util.Hashtable;
 
 %{
     private Symbol symbol(int type) {
-        return new Symbol(type, yyline+1, yycolumn+1);
+        return new Symbol(type, yyline, yycolumn);
     }
     //Debo de utilizar a este metodo para poder obtener el valor de los tokens
     private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn+1, value+1);
+        return new Symbol(type, yyline, yycolumn, value);
     }
 
     public List<Symbol> getTokens() {
