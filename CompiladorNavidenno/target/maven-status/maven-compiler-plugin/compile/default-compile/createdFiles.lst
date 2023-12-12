@@ -2,4 +2,5 @@ com\navidad\Lexer.class
 com\navidad\sym.class
 com\navidad\parser$CUP$parser$actions.class
 com\navidad\parser.class
+com\navidad\Table.class
 com\navidad\App.class
