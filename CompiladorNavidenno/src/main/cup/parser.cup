@@ -80,6 +80,8 @@ terminal SEPARADOR; // , separa entre funciones, parametros, etc.
 //lexema de null
 terminal CARBON; // 
 
+//Lexeman de error
+terminal MEDIAS_ERROR;
 //lexema de main
 terminal ESTRELLA_MAIN;
 

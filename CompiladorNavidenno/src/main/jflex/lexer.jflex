@@ -14,6 +14,28 @@ import java.util.Hashtable;
 %line
 %column
 
+%{
+    private Symbol symbol(int type) {
+        return new Symbol(type, yyline+1, yycolumn+1);
+    }
+    //Debo de utilizar a este metodo para poder obtener el valor de los tokens
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn+1, value+1);
+    }
+
+    public List<Symbol> getTokens() {
+        List<Symbol> tokens = new ArrayList<Symbol>();
+        Symbol token;
+        try {
+            while ((token = next_token()).sym != sym.EOF) {
+                tokens.add(symbol(token.sym, token.value));
+            }
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return tokens;
+    }
+%}
 //Inicio de las expresiones regulares
 
 //Expresiones binarias

@@ -27,7 +27,7 @@ public interface sym {
   public static final int ENTREGA = 55;
   public static final int SANTA_STRING = 25;
   public static final int ESCUCHA_READ = 53;
-  public static final int ESTRELLA_MAIN = 58;
+  public static final int ESTRELLA_MAIN = 59;
   public static final int L_SANTA_STRING = 31;
   public static final int PAPA_NOEL_FALSE = 37;
   public static final int DUENDE_ELSE = 46;
@@ -56,6 +56,7 @@ public interface sym {
   public static final int NAVIDAD_ABSTRACT = 33;
   public static final int ELFO_NOT_EQUAL = 15;
   public static final int QUIEN_INCREMENT = 11;
+  public static final int MEDIAS_ERROR = 58;
   public static final int REY_MELCHOR_COJUNCTION = 18;
   public static final int VIEJITO_PASCUERO_ARRAY = 26;
   public static final int GRINCH_DECREMENT = 10;
@@ -126,6 +127,7 @@ public interface sym {
   "ENTREGA",
   "SEPARADOR",
   "CARBON",
+  "MEDIAS_ERROR",
   "ESTRELLA_MAIN"
   };
 }
