@@ -20,7 +20,7 @@ public class App {
                 if (symbol.sym == 0) {
                     break;
                 }
-                System.out.println("Token: " + symbol.sym + " " + symbol.value);
+                System.out.println("Token: " + symbol.sym + " " + sym.terminalNames[symbol.sym] + " " + symbol.value);
             }
 
         } catch (Exception e) {
