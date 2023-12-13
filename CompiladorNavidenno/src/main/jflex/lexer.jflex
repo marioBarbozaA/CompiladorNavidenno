@@ -4,7 +4,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
-import java.util.Hashtable;
+
 
 %%
 
@@ -15,6 +15,9 @@ import java.util.Hashtable;
 %column
 
 %{
+    StringBuffer string = new StringBuffer();
+
+
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -100,12 +103,15 @@ LETTER = [a-zA-Z]
 FLOATING_NUMBER = {INT_NUMBER}\.{DIGIT}+ // e.g: 1.0e-10
 IDENTIFIER = {LETTER}[{LETTER}{DIGIT}]*
 CHAR_L = \'.\'
-    
+
+%state STRING
+
 %%
 
 
 //Palabras reservadas
 //No se pueden definiir como constartes, hay que ponerlo como una cadena de texto
+//<YYINITIAL> "\"" { yybegin(STRING); string.setLength(0); }//
 <YYINITIAL>  "int"  { return new Symbol(sym.COLACHO_INT, "int"); }
 <YYINITIAL>  "float"  { return new Symbol(sym.JOULUPUKKI_FLOAT, "float"); }
 <YYINITIAL>  "string"  { return new Symbol(sym.SANTA_STRING, "string"); }
@@ -132,7 +138,7 @@ CHAR_L = \'.\'
 {EMPTY_SPACE} { /* ignore */ }
 // comentarios
 {FULL_COMMENT} { /* ignore */ }
-
+\" { string.setLength(0); yybegin(STRING); }
 //Operaciones de control de bloques
 {OPEN_PARENTHESIS} { return new Symbol(sym.ABRE_CUENTO, yytext()); }
 {CLOSE_PARENTHESIS} { return new Symbol(sym.CIERRE_CUENTO, yytext()); }
@@ -179,11 +185,19 @@ CHAR_L = \'.\'
 {FLOATING_NUMBER} { return new Symbol(sym.L_JOULUPUKKI_FLOAT, yytext()); }
 {INT_NUMBER} { return new Symbol(sym.L_COLACHO_INT, yytext()); }
 
-
+<STRING> {
+    \" { yybegin(YYINITIAL); return symbol(sym.L_SANTA_STRING, string.toString()); }
+    [^\n\r\"\\] { string.append(yytext()); }
+    \\n { string.append("\n"); }
+    \\r { string.append("\r"); }
+    \\t { string.append("\t"); }
+    \\\" { string.append("\""); }
+    \\ { string.append("\\"); }
+}
 
 }
 // Lexemas no reconocidos
-. { 
+[^] { 
     // Acción a tomar para cualquier caracter no reconocido
     return new Symbol(sym.MEDIAS_ERROR, yytext()); 
 }

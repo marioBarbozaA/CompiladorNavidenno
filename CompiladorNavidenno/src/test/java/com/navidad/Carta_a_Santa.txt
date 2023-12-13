@@ -2,6 +2,7 @@
 "
 String multilinea
 "
+"String de una sola linea"
 /_
 El nombre de este archivo es gracias a Mario Barboza. Att:Camilo un guapo
 _/
