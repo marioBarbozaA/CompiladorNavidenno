@@ -25,6 +25,7 @@ mvn clean cup:generate jflex:generate compile exec:java
 
 El proyecto CompiladorNavideño está organizado de la siguiente manera:
 
+```bash
 ────CompiladorNavidenno
 ├───src
 │ ├───main
@@ -48,8 +49,9 @@ El proyecto CompiladorNavideño está organizado de la siguiente manera:
 │ ├───Carta_a_Santa.html
 │ └───Carta_a_Santa.txt
 ├───target
-│  
+│
 └───pom.xml
+```
 
 ## 💡 Notas Importantes
 
