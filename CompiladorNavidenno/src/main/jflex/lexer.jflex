@@ -28,7 +28,13 @@ import java.util.Hashtable;
         Symbol token;
         try {
             while ((token = next_token()).sym != sym.EOF) {
-                tokens.add(symbol(token.sym, token.value));
+                if (token.sym == sym.MEDIAS_ERROR) {
+                    Symbol error = symbol(token.sym, token.value);
+                    System.err.println(sym.terminalNames[error.sym]+ " "   + error.value + " en la linea " + error.left + " y columna " + error.right);
+                } else {
+                    tokens.add(symbol(token.sym, token.value));
+                }
+
             }
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
@@ -176,6 +182,10 @@ CHAR_L = \'.\'
 
 
 }
-// Fallback
+// Lexemas no reconocidos
+. { 
+    // Acción a tomar para cualquier caracter no reconocido
+    return new Symbol(sym.MEDIAS_ERROR, yytext()); 
+}
 
-// COLACHO_INT a <= 10|
+

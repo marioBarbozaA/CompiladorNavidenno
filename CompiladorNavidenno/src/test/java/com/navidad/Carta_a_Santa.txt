@@ -1,3 +1,7 @@
+
+"
+String multilinea
+"
 /_
 El nombre de este archivo es gracias a Mario Barboza. Att:Camilo un guapo
 _/
