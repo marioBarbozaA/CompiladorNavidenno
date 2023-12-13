@@ -4,7 +4,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
-import java.util.Hashtable;
+
 
 %%
 
@@ -15,12 +15,15 @@ import java.util.Hashtable;
 %column
 
 %{
+    StringBuffer string = new StringBuffer();
+
+
     private Symbol symbol(int type) {
-        return new Symbol(type, yyline+1, yycolumn+1);
+        return new Symbol(type, yyline, yycolumn);
     }
     //Debo de utilizar a este metodo para poder obtener el valor de los tokens
     private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn+1, value+1);
+        return new Symbol(type, yyline, yycolumn, value);
     }
 
     public List<Symbol> getTokens() {
@@ -28,7 +31,13 @@ import java.util.Hashtable;
         Symbol token;
         try {
             while ((token = next_token()).sym != sym.EOF) {
-                tokens.add(symbol(token.sym, token.value));
+                if (token.sym == sym.MEDIAS_ERROR) {
+                    Symbol error = symbol(token.sym, token.value);
+                    System.err.println(sym.terminalNames[error.sym]+ " "   + error.value + " en la linea " + error.left + " y columna " + error.right);
+                } else {
+                    tokens.add(symbol(token.sym, token.value));
+                }
+
             }
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
@@ -94,12 +103,15 @@ LETTER = [a-zA-Z]
 FLOATING_NUMBER = {INT_NUMBER}\.{DIGIT}+ // e.g: 1.0e-10
 IDENTIFIER = {LETTER}[{LETTER}{DIGIT}]*
 CHAR_L = \'.\'
-    
+
+%state STRING
+
 %%
 
 
 //Palabras reservadas
 //No se pueden definiir como constartes, hay que ponerlo como una cadena de texto
+//<YYINITIAL> "\"" { yybegin(STRING); string.setLength(0); }//
 <YYINITIAL>  "int"  { return new Symbol(sym.COLACHO_INT, "int"); }
 <YYINITIAL>  "float"  { return new Symbol(sym.JOULUPUKKI_FLOAT, "float"); }
 <YYINITIAL>  "string"  { return new Symbol(sym.SANTA_STRING, "string"); }
@@ -126,7 +138,7 @@ CHAR_L = \'.\'
 {EMPTY_SPACE} { /* ignore */ }
 // comentarios
 {FULL_COMMENT} { /* ignore */ }
-
+\" { string.setLength(0); yybegin(STRING); }
 //Operaciones de control de bloques
 {OPEN_PARENTHESIS} { return new Symbol(sym.ABRE_CUENTO, yytext()); }
 {CLOSE_PARENTHESIS} { return new Symbol(sym.CIERRE_CUENTO, yytext()); }
@@ -173,9 +185,21 @@ CHAR_L = \'.\'
 {FLOATING_NUMBER} { return new Symbol(sym.L_JOULUPUKKI_FLOAT, yytext()); }
 {INT_NUMBER} { return new Symbol(sym.L_COLACHO_INT, yytext()); }
 
-
+<STRING> {
+    \" { yybegin(YYINITIAL); return symbol(sym.L_SANTA_STRING, string.toString()); }
+    [^\n\r\"\\] { string.append(yytext()); }
+    \\n { string.append("\n"); }
+    \\r { string.append("\r"); }
+    \\t { string.append("\t"); }
+    \\\" { string.append("\""); }
+    \\ { string.append("\\"); }
+}
 
 }
-// Fallback
+// Lexemas no reconocidos
+[^] { 
+    // Acción a tomar para cualquier caracter no reconocido
+    return new Symbol(sym.MEDIAS_ERROR, yytext()); 
+}
 
-// COLACHO_INT a <= 10|
+

@@ -1,5 +1,4 @@
 # Ignore temporary files often created by text editors
 Lexer.java~
-
-# Ignore the target directory
-target/
+/CompiladorNavidenno/target
+/.vscode
