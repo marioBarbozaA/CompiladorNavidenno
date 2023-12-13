@@ -8,107 +8,127 @@ package com.navidad;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int ABRE_CUENTO = 28;
-  public static final int REY_MELCHOR = 18;
-  public static final int CIERRA_EMPAQUE = 31;
-  public static final int ABRE_REGALO = 32;
-  public static final int ELFO_MAYOR = 12;
-  public static final int CIERRA_REGALO = 33;
-  public static final int HADA = 35;
+  public static final int ENVIA_RETURN = 50;
+  public static final int ABRE_CUENTO = 38;
+  public static final int CIERRA_EMPAQUE = 41;
+  public static final int COLACHO_INT = 21;
+  public static final int ABRE_REGALO = 42;
+  public static final int L_PAPA_NOEL_BOOLEAN = 29;
+  public static final int RAYO_FLOAT_DIVISION = 5;
+  public static final int NARRA_PRINT = 52;
+  public static final int L_JOULUPUKKI_FLOAT = 28;
+  public static final int ELFO_IF = 44;
+  public static final int CIERRA_REGALO = 43;
   public static final int PERSONA = 9;
-  public static final int ELFO_MAYOR_IGUAL = 16;
-  public static final int CARBON = 47;
-  public static final int DUENDE = 36;
-  public static final int REY_GASPAR = 19;
-  public static final int SEPARADOR = 46;
-  public static final int L_JOULUPUKKI = 27;
-  public static final int ENTREGA = 45;
-  public static final int RAYO = 5;
-  public static final int RODOLFO = 2;
-  public static final int RELAMPAGO = 4;
-  public static final int ELFO_MENOR_IGUAL = 17;
-  public static final int NAVIDAD = 23;
-  public static final int FIN_REGALO = 44;
-  public static final int NARRA = 42;
-  public static final int CIERRE_CUENTO = 29;
-  public static final int ELFO_NO_IGUAL = 15;
-  public static final int HACE = 38;
-  public static final int SALTARIN = 6;
-  public static final int ENVUELVE = 37;
-  public static final int COMETA = 7;
-  public static final int BOOLEAN = 49;
-  public static final int GRINCH = 10;
-  public static final int FESTIVAL = 24;
+  public static final int CARBON = 57;
+  public static final int ELFO_LESS_EQUAL = 17;
+  public static final int ELFO_GREATER = 12;
+  public static final int SEPARADOR = 56;
+  public static final int ENTREGA = 55;
+  public static final int SANTA_STRING = 25;
+  public static final int ESCUCHA_READ = 53;
+  public static final int ESTRELLA_MAIN = 59;
+  public static final int L_SANTA_STRING = 31;
+  public static final int PAPA_NOEL_FALSE = 37;
+  public static final int DUENDE_ELSE = 46;
+  public static final int REVISA_UNTIL = 49;
+  public static final int FIN_REGALO = 54;
+  public static final int CIERRE_CUENTO = 39;
+  public static final int FIESTA_PRIVATE = 35;
+  public static final int HADA_ELIF = 45;
+  public static final int PAPA_NOEL_TRUE = 36;
+  public static final int RELAMPAGO_INT_DIVISION = 4;
   public static final int EOF = 0;
-  public static final int CORTA = 41;
-  public static final int REVISA = 39;
+  public static final int L_COLACHO_INT = 27;
+  public static final int CLAUS_CHAR = 24;
+  public static final int TRUENO_DECREASE = 3;
+  public static final int ELFO_GREATER_EQUAL = 16;
   public static final int error = 1;
-  public static final int TRUENO = 3;
-  public static final int ABRE_EMPAQUE = 30;
-  public static final int BREAK = 48;
-  public static final int ESCUCHA = 43;
-  public static final int CUPIDO = 8;
-  public static final int ENVIA = 40;
-  public static final int ELFO_IGUAL = 14;
-  public static final int COLACHO = 21;
-  public static final int FIESTA = 25;
-  public static final int L_VIEJITO_PASCUERO = 26;
-  public static final int REY_BALTASAR = 20;
-  public static final int SANTA = 22;
-  public static final int ELFO = 34;
-  public static final int QUIEN = 11;
-  public static final int ELFO_MENOR = 13;
+  public static final int FESTIVA_PUBLICL = 34;
+  public static final int ELFO_LESS = 13;
+  public static final int ABRE_EMPAQUE = 40;
+  public static final int PAPA_NOEL_BOOLEAN = 23;
+  public static final int SALTARIN_ELEVATE = 6;
+  public static final int ENVUELVE_FOR = 47;
+  public static final int COMETA_PRODUCT = 7;
+  public static final int HACE_DO = 48;
+  public static final int REY_BALTASAR_NOT = 20;
+  public static final int NAVIDAD_ABSTRACT = 33;
+  public static final int ELFO_NOT_EQUAL = 15;
+  public static final int QUIEN_INCREMENT = 11;
+  public static final int MEDIAS_ERROR = 58;
+  public static final int REY_MELCHOR_COJUNCTION = 18;
+  public static final int VIEJITO_PASCUERO_ARRAY = 26;
+  public static final int GRINCH_DECREMENT = 10;
+  public static final int L_VIEJITO_PASCUERO_ARRAY = 32;
+  public static final int REY_GASPAR_DISJUNCTION = 19;
+  public static final int CUPIDO_MODULE = 8;
+  public static final int RODOLFO_SUM = 2;
+  public static final int ELFO_EQUAL = 14;
+  public static final int JOULUPUKKI_FLOAT = 22;
+  public static final int L_CLAUS_CHAR = 30;
+  public static final int CORTA_BREAK = 51;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "RODOLFO",
-  "TRUENO",
-  "RELAMPAGO",
-  "RAYO",
-  "SALTARIN",
-  "COMETA",
-  "CUPIDO",
+  "RODOLFO_SUM",
+  "TRUENO_DECREASE",
+  "RELAMPAGO_INT_DIVISION",
+  "RAYO_FLOAT_DIVISION",
+  "SALTARIN_ELEVATE",
+  "COMETA_PRODUCT",
+  "CUPIDO_MODULE",
   "PERSONA",
-  "GRINCH",
-  "QUIEN",
-  "ELFO_MAYOR",
-  "ELFO_MENOR",
-  "ELFO_IGUAL",
-  "ELFO_NO_IGUAL",
-  "ELFO_MAYOR_IGUAL",
-  "ELFO_MENOR_IGUAL",
-  "REY_MELCHOR",
-  "REY_GASPAR",
-  "REY_BALTASAR",
-  "COLACHO",
-  "SANTA",
-  "NAVIDAD",
-  "FESTIVAL",
-  "FIESTA",
-  "L_VIEJITO_PASCUERO",
-  "L_JOULUPUKKI",
+  "GRINCH_DECREMENT",
+  "QUIEN_INCREMENT",
+  "ELFO_GREATER",
+  "ELFO_LESS",
+  "ELFO_EQUAL",
+  "ELFO_NOT_EQUAL",
+  "ELFO_GREATER_EQUAL",
+  "ELFO_LESS_EQUAL",
+  "REY_MELCHOR_COJUNCTION",
+  "REY_GASPAR_DISJUNCTION",
+  "REY_BALTASAR_NOT",
+  "COLACHO_INT",
+  "JOULUPUKKI_FLOAT",
+  "PAPA_NOEL_BOOLEAN",
+  "CLAUS_CHAR",
+  "SANTA_STRING",
+  "VIEJITO_PASCUERO_ARRAY",
+  "L_COLACHO_INT",
+  "L_JOULUPUKKI_FLOAT",
+  "L_PAPA_NOEL_BOOLEAN",
+  "L_CLAUS_CHAR",
+  "L_SANTA_STRING",
+  "L_VIEJITO_PASCUERO_ARRAY",
+  "NAVIDAD_ABSTRACT",
+  "FESTIVA_PUBLICL",
+  "FIESTA_PRIVATE",
+  "PAPA_NOEL_TRUE",
+  "PAPA_NOEL_FALSE",
   "ABRE_CUENTO",
   "CIERRE_CUENTO",
   "ABRE_EMPAQUE",
   "CIERRA_EMPAQUE",
   "ABRE_REGALO",
   "CIERRA_REGALO",
-  "ELFO",
-  "HADA",
-  "DUENDE",
-  "ENVUELVE",
-  "HACE",
-  "REVISA",
-  "ENVIA",
-  "CORTA",
-  "NARRA",
-  "ESCUCHA",
+  "ELFO_IF",
+  "HADA_ELIF",
+  "DUENDE_ELSE",
+  "ENVUELVE_FOR",
+  "HACE_DO",
+  "REVISA_UNTIL",
+  "ENVIA_RETURN",
+  "CORTA_BREAK",
+  "NARRA_PRINT",
+  "ESCUCHA_READ",
   "FIN_REGALO",
   "ENTREGA",
   "SEPARADOR",
   "CARBON",
-  "BREAK",
-  "BOOLEAN"
+  "MEDIAS_ERROR",
+  "ESTRELLA_MAIN"
   };
 }
 

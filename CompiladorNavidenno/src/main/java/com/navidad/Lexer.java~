@@ -386,7 +386,7 @@ class Lexer implements java_cup.runtime.Scanner {
             while ((token = next_token()).sym != sym.EOF) {
                 if (token.sym == sym.MEDIAS_ERROR) {
                     Symbol error = symbol(token.sym, token.value);
-                    System.err.println(sym.terminalNames[error.sym]+ " "   + error.value + " en la linea " + error.left + " y columna " + error.right);
+                    System.err.println(sym.terminalNames[error.sym] + error.value + " en la linea " + error.left + " y columna " + error.right);
                 } else {
                     tokens.add(symbol(token.sym, token.value));
                 }

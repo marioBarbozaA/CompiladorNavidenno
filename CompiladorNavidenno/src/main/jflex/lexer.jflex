@@ -3,6 +3,8 @@ package com.navidad;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
+import java.util.Hashtable;
 
 %%
 
@@ -12,6 +14,34 @@ import java.util.List;
 %line
 %column
 
+%{
+    private Symbol symbol(int type) {
+        return new Symbol(type, yyline, yycolumn);
+    }
+    //Debo de utilizar a este metodo para poder obtener el valor de los tokens
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn, value);
+    }
+
+    public List<Symbol> getTokens() {
+        List<Symbol> tokens = new ArrayList<Symbol>();
+        Symbol token;
+        try {
+            while ((token = next_token()).sym != sym.EOF) {
+                if (token.sym == sym.MEDIAS_ERROR) {
+                    Symbol error = symbol(token.sym, token.value);
+                    System.err.println(sym.terminalNames[error.sym]+ " "   + error.value + " en la linea " + error.left + " y columna " + error.right);
+                } else {
+                    tokens.add(symbol(token.sym, token.value));
+                }
+
+            }
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return tokens;
+    }
+%}
 //Inicio de las expresiones regulares
 
 //Expresiones binarias
@@ -53,13 +83,13 @@ ASSIGNTMENT = \<\= // e.g: a <= 10
 PIPE_DELIMITER = \| // a <= 10 |
 
 //Expresiones de terminacion de linea
-END_LINE = [\r] | (\r\n|\r|\n) | [\n]
+END_LINE = \r\n|\r|\n
 //Expresiones de espacios en vacíos
 EMPTY_SPACE = [ \t]* | {END_LINE}
 
 //Expresiones de comentarios
-LINE_COMMENT = "@" ^{END_LINE}* {END_LINE}? // e.g: @ This is a comment
-MULTI_lINE_COMMENT = "\/_" [^\_] "\_/" | "\/_" "\_" + "/" // e.g: /_ This is a comment _/
+LINE_COMMENT = "@" .* {END_LINE}? // e.g: @ This is a comment
+MULTI_lINE_COMMENT = "/_" [^_]* "_/" // e.g: /_ This is a comment _/
 FULL_COMMENT = {LINE_COMMENT} | {MULTI_lINE_COMMENT} // e.g: @ This is a comment or /_ This is a comment _/
 
 //Expresiones de Números e identificadores
@@ -67,62 +97,42 @@ DIGIT = [0-9]
 INT_NUMBER = 0 | -?[1-9]{DIGIT}*
 
 LETTER = [a-zA-Z]
-FLOATING_NUMBER = {INT_NUMBER}*\.{DIGIT}+ // e.g: 1.0e-10
+FLOATING_NUMBER = {INT_NUMBER}\.{DIGIT}+ // e.g: 1.0e-10
 IDENTIFIER = {LETTER}[{LETTER}{DIGIT}]*
-
+CHAR_L = \'.\'
     
 %%
 
 
 //Palabras reservadas
-INT = "int"
-FLOAT = "float"
-STRING = "string"
-BOOL = "bool"
-CHAR = "char"
-ARR = "arr"
-TRUE = "true"
-FALSE = "false"
-IF = "if"
-ELSE = "else"
-ELIF = "elif"
-WHILE = "while"
-FOR = "for"
-DO = "do"
-UNTIL = "until"
-RETURN = "return"
-BREAK = "break"
-CONTINUE = "continue"
-PASS = "pass"
-PRINT = "print"
-READ = "read"
-MAIN = "main"
-VOID = "void"
-NULL = "null"
-IN = "in"
-
-<YYINITIAL> { INT } { return new Symbol(sym.COLACHO_INT, INT); }
-<YYINITIAL> { FLOAT } { return new Symbol(sym.JOULUPUKKI_FLOAT, FLOAT); }
-<YYINITIAL> { STRING } { return new Symbol(sym.SANTA_STRING, STRING); }
-<YYINITIAL> { BOOL } { return new Symbol(sym.PAPA_NOEL_BOOLEAN, BOOL); }
-<YYINITIAL> { CHAR } { return new Symbol(sym.CLAUS_CHAR, CHAR); }
-<YYINITIAL> { ARR } { return new Symbol(sym.VIEJITO_PASCUERO_ARRAY, ARR); }
-<YYINITIAL> { TRUE } { return new Symbol(sym.L_VIEJITO_PASCUERO, TRUE); }
-<YYINITIAL> { FALSE } { return new Symbol(sym.L_JOULUPUKKI, FALSE); }
-<YYINITIAL> { IF } { return new Symbol(sym.ELFO_IF, IF); }
-<YYINITIAL> { ELSE } { return new Symbol(sym.DUENDE_ELSE, ELSE); }
-<YYINITIAL> { ELIF } { return new Symbol(sym.HADA_ELIF, ELIF); }
-<YYINITIAL> { FOR } { return new Symbol(sym.ENVUELVE_FOR, FOR); }
-<YYINITIAL> { DO } { return new Symbol(sym.HACE_DO, DO); }
-<YYINITIAL> { UNTIL } { return new Symbol(sym.REVISA_UNTIL, UNTIL); }
-<YYINITIAL> { RETURN } { return new Symbol(sym.ENVIA_RETURN, RETURN); }
-<YYINITIAL> { BREAK } { return new Symbol(sym.CORTA_BREAK, BREAK); }
-<YYINITIAL> { PRINT } { return new Symbol(sym.NARRA_PRINT, PRINT); }
-<YYINITIAL> { READ } { return new Symbol(sym.ESCUCHA_READ, READ); }
-<YYINITIAL> { MAIN } { return new Symbol(sym.ESTRELLA_MAIN, MAIN); }
+//No se pueden definiir como constartes, hay que ponerlo como una cadena de texto
+<YYINITIAL>  "int"  { return new Symbol(sym.COLACHO_INT, "int"); }
+<YYINITIAL>  "float"  { return new Symbol(sym.JOULUPUKKI_FLOAT, "float"); }
+<YYINITIAL>  "string"  { return new Symbol(sym.SANTA_STRING, "string"); }
+<YYINITIAL>  "bool"  { return new Symbol(sym.PAPA_NOEL_BOOLEAN, "bool"); }
+<YYINITIAL>  "char"  { return new Symbol(sym.CLAUS_CHAR, "char"); }
+<YYINITIAL>  "arr"  { return new Symbol(sym.VIEJITO_PASCUERO_ARRAY, "arr"); }
+<YYINITIAL>  "true"  { return new Symbol(sym.PAPA_NOEL_TRUE, "true"); }
+<YYINITIAL>  "false"  { return new Symbol(sym.PAPA_NOEL_FALSE, "false"); }
+<YYINITIAL>  "if"  { return new Symbol(sym.ELFO_IF, "if"); }
+<YYINITIAL>  "else"  { return new Symbol(sym.DUENDE_ELSE, "else"); }
+<YYINITIAL>  "elif"  { return new Symbol(sym.HADA_ELIF, "elif"); }
+<YYINITIAL>  "for"  { return new Symbol(sym.ENVUELVE_FOR, "for"); }
+<YYINITIAL>  "do"  { return new Symbol(sym.HACE_DO, "do"); }
+<YYINITIAL>  "until"  { return new Symbol(sym.REVISA_UNTIL, "until"); }
+<YYINITIAL>  "return"  { return new Symbol(sym.ENVIA_RETURN, "return"); }
+<YYINITIAL>  "break"  { return new Symbol(sym.CORTA_BREAK, "break"); }
+<YYINITIAL>  "print"  { return new Symbol(sym.NARRA_PRINT, "print"); }
+<YYINITIAL>  "read" { return new Symbol(sym.ESCUCHA_READ, "read"); }
+<YYINITIAL>  "main"  { return new Symbol(sym.ESTRELLA_MAIN, "main"); }
 
 
 <YYINITIAL> {
+//Espacios en blanco
+{EMPTY_SPACE} { /* ignore */ }
+// comentarios
+{FULL_COMMENT} { /* ignore */ }
+
 //Operaciones de control de bloques
 {OPEN_PARENTHESIS} { return new Symbol(sym.ABRE_CUENTO, yytext()); }
 {CLOSE_PARENTHESIS} { return new Symbol(sym.CIERRE_CUENTO, yytext()); }
@@ -164,8 +174,18 @@ IN = "in"
 // IDENTIFICADOR
 {IDENTIFIER} { return new Symbol(sym.PERSONA, yytext()); }
 
+// LITERALES
+{CHAR_L} { return new Symbol(sym.L_CLAUS_CHAR, yytext()); }
+{FLOATING_NUMBER} { return new Symbol(sym.L_JOULUPUKKI_FLOAT, yytext()); }
+{INT_NUMBER} { return new Symbol(sym.L_COLACHO_INT, yytext()); }
+
+
 
 }
-// Fallback
+// Lexemas no reconocidos
+. { 
+    // Acción a tomar para cualquier caracter no reconocido
+    return new Symbol(sym.MEDIAS_ERROR, yytext()); 
+}
 
-// COLACHO_INT a <= 10|
+
