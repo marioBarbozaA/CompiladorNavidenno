@@ -75,7 +75,7 @@ terminal FIN_REGALO; // ;(|) Sirve para Finalizar
 terminal ENTREGA; // =    //ASSIGMENT <= 
 
 // lexema separador: separador
-terminal SEPARADOR; // , separa entre funciones, parametros, etc.
+terminal SEPARADOR_BASTON; // , separa entre funciones, parametros, etc.
 
 //lexema de null
 terminal CARBON; // 

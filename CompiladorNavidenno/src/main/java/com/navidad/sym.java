@@ -23,7 +23,6 @@ public interface sym {
   public static final int CARBON = 57;
   public static final int ELFO_LESS_EQUAL = 17;
   public static final int ELFO_GREATER = 12;
-  public static final int SEPARADOR = 56;
   public static final int ENTREGA = 55;
   public static final int SANTA_STRING = 25;
   public static final int ESCUCHA_READ = 53;
@@ -61,6 +60,7 @@ public interface sym {
   public static final int VIEJITO_PASCUERO_ARRAY = 26;
   public static final int GRINCH_DECREMENT = 10;
   public static final int L_VIEJITO_PASCUERO_ARRAY = 32;
+  public static final int SEPARADOR_BASTON = 56;
   public static final int REY_GASPAR_DISJUNCTION = 19;
   public static final int CUPIDO_MODULE = 8;
   public static final int RODOLFO_SUM = 2;
@@ -125,7 +125,7 @@ public interface sym {
   "ESCUCHA_READ",
   "FIN_REGALO",
   "ENTREGA",
-  "SEPARADOR",
+  "SEPARADOR_BASTON",
   "CARBON",
   "MEDIAS_ERROR",
   "ESTRELLA_MAIN"
