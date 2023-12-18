@@ -18,7 +18,6 @@ parser code {:
     this.symbolFactory = new DefaultSymbolFactory();
   }
 :}
-
 scan with {: return lex.next_token(); :};
 init with {: :};
 
@@ -76,16 +75,10 @@ terminal FIN_REGALO; // ;(|) Sirve para Finalizar
 terminal ENTREGA; // =    //ASSIGMENT <= 
 
 // lexema separador: separador
-terminal SEPARADOR_BASTON; // , separa entre funciones, parametros, etc.
+terminal SEPARADOR; // , separa entre funciones, parametros, etc.
 
 //lexema de null
 terminal CARBON; // 
-
-//Lexema de funcion
-terminal FUNCTION_VILLANCICOS;
-
-//lexema de local variable
-terminal LOCAL_MUERDAGO;
 
 //Lexeman de error
 terminal MEDIAS_ERROR;
@@ -93,128 +86,37 @@ terminal MEDIAS_ERROR;
 terminal ESTRELLA_MAIN;
 
 //Empezamos la Tarea 1 de definición de Gramatica
-non terminal NAVIDAD;// Empezar con navidad
+non terminal navidad;// Empezar con navidad
 
-//No terminales para literales y tipos de datos
-non terminal T_COPO, l_COPO, ARG_COPO;
+non terminal tipos_copo, literales_copo,argumentos_copo;
 
 //No terminales de Funciones
-non terminal FUNCIONES_BOLSA_NAVIDENNA, FUNCION_REGALO, DEF_JUGUETE, CODIGO_ENVOLTURA; 
+non terminal funciones_bolsa_navidenna, funcion_regalo, def_juguete, codigo_envoltura; 
 
 //No terminales de parametros
-non terminal PARAMETROS_PALETAS, PARAMETRO_PALETA;
+
+non terminal parametros_paletas, parametro_paleta;
 
 //lineas codigo 
-non terminal LINEAS_LAZOS, LINEA_LAZO;
+non terminal lineas_lazos, linea_lazo;
 
 //Asignar variables 
-non terminal ASIGNACION_GORRO;
-// flujo de control
-non terminal RETORNO_BURRITO_SABANERO, DO_UNTIL_FANTASMA_PASADO, FOR_FANTASMA_PRESENTE, CALL_FUNCTION_FANTASMA_FUTURO;
-non terminal IF_JUANITO_ESCARCHA, ELIF_BATMAN, ELIF_MULTI_JACK_FROST, ELSE_SCROOGE; // SI, BATMAN ES UNA PELI NAVIDEÑA ;)
-//expresiones 
-non terminal  ELEMENTO_ARRAY_DULCE, l_ARRAY_TAMAL, EXPRESION_BOTA; // a[0], {1,2,3}
 
-non terminal EXPRESION_ARIT_BOTAS, EXPRESION_REL_BOTAS, EXPRESION_LOG_BOTAS;
+non terminal asignacion_gorro;
+
+//expresiones 
+
+non terminal expresion_chocolate, elemento_array_dulce, literal_array_tamal
 
 
 //Precedencias 
 
-precedence left RODOLFO_SUM, TRUENO_DECREASE;
-precedence left RAYO_FLOAT_DIVISION, RELAMPAGO_INT_DIVISION, COMETA_PRODUCT;
-precedence left SALTARIN_ELEVATE, CUPIDO_MODULE;
-precedence left GRINCH_DECREMENT, QUIEN_INCREMENT;
 
-precedence left REY_MELCHOR_COJUNCTION;
-precedence left REY_GASPAR_DISJUNCTION;
-precedence left REY_BALTASAR_NOT;
+DEF_JUGUETE::=
+
 
 // Producción de inicio
-start with NAVIDAD;
-
-
-NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA;
-
-T_COPO::= COLACHO_INT | JOULUPUKKI_FLOAT | PAPA_NOEL_BOOLEAN | CLAUS_CHAR | SANTA_STRING | VIEJITO_PASCUERO_ARRAY;
-l_COPO::= L_COLACHO_INT | L_JOULUPUKKI_FLOAT | L_PAPA_NOEL_BOOLEAN | L_CLAUS_CHAR | L_SANTA_STRING | L_VIEJITO_PASCUERO_ARRAY;
-ARG_COPO::= EXPRESION_BOTA | ARG_COPO SEPARADOR EXPRESION_BOTA;
-
-FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_REGALO;
-
-FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA; // function int myFuncion (){return 1}
- 
-DEF_JUGUETE::= FUNCTION_VILLANCICOS ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO | // FUNCTION MAIN (){} |  
-              FUNCTION_VILLANCICOS T_COPO PERSONA ABRE_CUENTO CIERRE_CUENTO | // function int myFuncion (){}
-              FUNCTION_VILLANCICOS T_COPO PERSONA ABRE_CUENTO PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b){}
-
-PARAMETROS_PALETAS::= PARAMETRO_PALETA | PARAMETROS_PALETAS SEPARADOR PARAMETRO_PALETA;
-PARAMETRO_PALETA::= T_COPO PERSONA;
-
-CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO;
-
-RETORNO_BURRITO_SABANERO::= ENVIA_RETURN EXPRESION_BOTA;
-
-LINEA_LAZO::= ASIGNACION_GORRO FIN_REGALO |  EXPRESION_BOTA FIN_REGALO | 
-              CORTA_BREAK FIN_REGALO | RETORNO_BURRITO_SABANERO FIN_REGALO | 
-              FOR_FANTASMA_PRESENTE FIN_REGALO | DO_UNTIL_FANTASMA_PASADO FIN_REGALO |
-              IF_JUANITO_ESCARCHA; // ESTE ULTIMO CREO QUE HAY QUE CAMBIARLO POR UNA DEFINICION 
-
-CALL_FUNCTION_FANTASMA_FUTURO::= PERSONA ABRE_CUENTO  CIERRE_CUENTO | // myFuncion()
-                                PERSONA ABRE_CUENTO ARG_COPO CIERRE_CUENTO |
-                                NARRA_PRINT ABRE_CUENTO ARG_COPO CIERRE_CUENTO |
-                                NARRA_PRINT ABRE_CUENTO CIERRE_CUENTO | 
-                                ESCUCHA_READ ABRE_CUENTO ARG_COPO CIERRE_CUENTO |
-                                ESCUCHA_READ ABRE_CUENTO CIERRE_CUENTO; // myFuncion(1,2,3)
-
-IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA |
-                      ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELSE_SCROOGE |
-                      ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST |
-                      ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST ELSE_SCROOGE;
-
-
-ELIF_MULTI_JACK_FROST::= ELIF_BATMAN | ELIF_BATMAN ELIF_MULTI_JACK_FROST;
-ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA;
-ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
-
-LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;
-
-ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO PERSONA  FIN_REGALO | // local int a|
-                    LOCAL_MUERDAGO T_COPO PERSONA ENTREGA EXPRESION_BOTA FIN_REGALO | // local int a <= 1|
-                    PERSONA ENTREGA EXPRESION_BOTA FIN_REGALO | // a <= 1|
-                    LOCAL_MUERDAGO T_COPO ELEMENTO_ARRAY_DULCE FIN_REGALO | // local int a[1]|
-                    LOCAL_MUERDAGO T_COPO ELEMENTO_ARRAY_DULCE ENTREGA l_ARRAY_TAMAL FIN_REGALO | // local int a[4] <= {1,2,3,4}|
-                    ELEMENTO_ARRAY_DULCE ENTREGA l_ARRAY_TAMAL ; // a[4] <= {1,2,3,4}|
-
-EXPRESION_BOTA::= l_COPO | PERSONA |
-                  ELEMENTO_ARRAY_DULCE | ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO | 
-                  CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_BOTAS | EXPRESION_REL_BOTAS | EXPRESION_LOG_BOTAS;
-
-ELEMENTO_ARRAY_DULCE::= PERSONA ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE; // a[0][1]
-
-l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
-
-EXPRESION_ARIT_BOTAS::= EXPRESION_BOTA RODOLFO_SUM EXPRESION_BOTA | // a + b
-                        EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA | // a - b
-                        EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA | // a // b
-                        EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA | // a / b
-                        EXPRESION_BOTA SALTARIN_ELEVATE EXPRESION_BOTA | // a ** b
-                        EXPRESION_BOTA COMETA_PRODUCT EXPRESION_BOTA | // a * b
-                        EXPRESION_BOTA CUPIDO_MODULE EXPRESION_BOTA | // a ~ b
-                        GRINCH_DECREMENT EXPRESION_BOTA | // --a
-                        QUIEN_INCREMENT EXPRESION_BOTA | // ++a
-                        GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | // --a[0]
-                        QUIEN_INCREMENT ELEMENTO_ARRAY_DULCE; // ++a[0]
-
-EXPRESION_REL_BOTAS::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA | // a > b
-                        EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA | // a < b
-                        EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA | // a === b
-                        EXPRESION_BOTA ELFO_NOT_EQUAL EXPRESION_BOTA | // a !== b
-                        EXPRESION_BOTA ELFO_GREATER_EQUAL EXPRESION_BOTA | // a >== b
-                        EXPRESION_BOTA ELFO_LESS_EQUAL EXPRESION_BOTA; // a <== b
-
-EXPRESION_LOG_BOTAS::= EXPRESION_BOTA REY_MELCHOR_COJUNCTION EXPRESION_BOTA | // a && b
-                        EXPRESION_BOTA REY_GASPAR_DISJUNCTION EXPRESION_BOTA | // a || b
-                        REY_BALTASAR_NOT EXPRESION_BOTA; // !a  
+start with navidad;
 
 
 SantaScript ::= {:
