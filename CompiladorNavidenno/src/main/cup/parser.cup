@@ -85,11 +85,20 @@ terminal MEDIAS_ERROR;
 //lexema de main
 terminal ESTRELLA_MAIN;
 
-// No terminales 
-non terminal SantaScript;
+//Empezamos la Tarea 1 de definición de Gramatica
+non terminal navidad;// Empezar con navidad
+
+//No terminales de Funciones
+ 
+
+//Precedencias 
+
+
+
 
 // Producción de inicio
-start with SantaScript;
+start with navidad;
+
 
 SantaScript ::= {:
                     hola(); 
