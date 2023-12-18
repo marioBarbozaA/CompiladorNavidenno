@@ -85,11 +85,38 @@ terminal MEDIAS_ERROR;
 //lexema de main
 terminal ESTRELLA_MAIN;
 
-// No terminales 
-non terminal SantaScript;
+//Empezamos la Tarea 1 de definición de Gramatica
+non terminal navidad;// Empezar con navidad
+
+non terminal tipos_copo, literales_copo,argumentos_copo;
+
+//No terminales de Funciones
+non terminal funciones_bolsa_navidenna, funcion_regalo, def_juguete, codigo_envoltura; 
+
+//No terminales de parametros
+
+non terminal parametros_paletas, parametro_paleta;
+
+//lineas codigo 
+non terminal lineas_lazos, linea_lazo;
+
+//Asignar variables 
+
+non terminal asignacion_gorro;
+
+//expresiones 
+
+non terminal expresion_chocolate, elemento_array_dulce, literal_array_tamal
+
+
+//Precedencias 
+
+
+
 
 // Producción de inicio
-start with SantaScript;
+start with navidad;
+
 
 SantaScript ::= {:
                     hola(); 
