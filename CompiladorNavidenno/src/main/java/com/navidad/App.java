@@ -40,8 +40,8 @@ public class App {
     private static void processFile(String filePath, Table table) {
         try (Reader reader = new BufferedReader(new FileReader(filePath))) {
             Lexer lexer = new Lexer(reader);
-            parser parse = new parser(lexer);
-            parse.parse();
+            //parser parse = new parser(lexer);
+            //parse.parse();
             for (Symbol token : lexer.getTokens()) {
                 addTokenToTable(token, table);
                 System.out.println("Token: " + token.sym + " " + sym.terminalNames[token.sym] + " " + token.value);

@@ -112,7 +112,7 @@ CHAR_L = \'.\'
 //Palabras reservadas
 //No se pueden definiir como constartes, hay que ponerlo como una cadena de texto
 <YYINITIAL>  "function"  { return new Symbol(sym.FUNCTION_VILLANCICOS, "function"); }
-<<YYINITIAL>  "local"  { return new Symbol(sym.LOCAL_MUERDAGO, "local"); }
+<YYINITIAL>  "local"  { return new Symbol(sym.LOCAL_MUERDAGO, "local"); }
 <YYINITIAL>  "int"  { return new Symbol(sym.COLACHO_INT, "int"); }
 <YYINITIAL>  "float"  { return new Symbol(sym.JOULUPUKKI_FLOAT, "float"); }
 <YYINITIAL>  "string"  { return new Symbol(sym.SANTA_STRING, "string"); }
