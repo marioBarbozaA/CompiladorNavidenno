@@ -1,1 +1,7 @@
 function main(){}
+
+local int camilo|
+
+local int mario <=2|
+
+mario <=3|
