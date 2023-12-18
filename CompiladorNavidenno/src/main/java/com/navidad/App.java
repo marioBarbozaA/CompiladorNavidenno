@@ -21,6 +21,7 @@ public class App {
         exportTableToFile(table, OUTPUT_PATH);
         System.out.println("Proceso completado.");
     }
+    
 
     /**
      * Inicializa la tabla con los encabezados correspondientes.
@@ -39,9 +40,11 @@ public class App {
      */
     private static void processFile(String filePath, Table table) {
         try (Reader reader = new BufferedReader(new FileReader(filePath))) {
+            Reader readerPar = new BufferedReader(new FileReader(filePath));
             Lexer lexer = new Lexer(reader);
-            //parser parse = new parser(lexer);
-            //parse.parse();
+            Lexer lexPar = new Lexer(readerPar);
+            parser parse = new parser(lexPar);
+            parse.parse();
             for (Symbol token : lexer.getTokens()) {
                 addTokenToTable(token, table);
                 System.out.println("Token: " + token.sym + " " + sym.terminalNames[token.sym] + " " + token.value);
