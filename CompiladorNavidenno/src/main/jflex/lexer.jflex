@@ -103,6 +103,7 @@ LETTER = [a-zA-Z]
 FLOATING_NUMBER = {INT_NUMBER}\.{DIGIT}+ // e.g: 1.0e-10
 IDENTIFIER = {LETTER}[{LETTER}{DIGIT}]*
 CHAR_L = \'.\'
+SEPARATOR = \,
 
 %state STRING
 
@@ -180,6 +181,7 @@ CHAR_L = \'.\'
 
 // IDENTIFICADOR
 {IDENTIFIER} { return new Symbol(sym.PERSONA, yytext()); }
+{SEPARATOR} { return new Symbol(sym.SEPARADOR_BASTON, yytext());}
 
 // LITERALES
 {CHAR_L} { return new Symbol(sym.L_CLAUS_CHAR, yytext()); }
