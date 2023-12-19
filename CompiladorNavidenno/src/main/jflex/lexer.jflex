@@ -137,9 +137,9 @@ SEPARATOR = \,
 
 <YYINITIAL> {
 //Espacios en blanco
+{FULL_COMMENT} { /* ignore */ }
 {EMPTY_SPACE} { /* ignore */ }
 // comentarios
-{FULL_COMMENT} { /* ignore */ }
 \" { string.setLength(0); yybegin(STRING); }
 //Operaciones de control de bloques
 {OPEN_PARENTHESIS} { return new Symbol(sym.ABRE_CUENTO, yytext()); }
