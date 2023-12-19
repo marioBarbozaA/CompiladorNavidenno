@@ -1,7 +1,68 @@
-function main(){}
+function main () {
+ /_ pruebas
+ del 
+ brete 
+  _/
+    @ASIGNACIONES
 
-local int camilo|
+    a <= 1|  
+    local int a <= 1|
+    local int a|
+    local int a[4] <= {1,2,3,4}|
+    a[4] <= {1,2,3,4}|
 
-local int mario <=2|
+  @LITERAL
+    1 |
+    "hola"|
+    "c"|
+    1.0|
+    0.2|
+    0.0|
+    100.0|
+    -1|
+    true|
+    false|
+    'c'|
 
-mario <=3|
+    @break
+    break| 
+
+    @return
+    return a|
+
+    @for
+    for(a <= 0| a < 10| ++a){}|
+
+    @do_until
+    do {
+        a[4] <= {-1,-2,-3,-4}|
+        a[0] <= ++a[0]|
+    } until (a)|
+
+    @IF_JUANITO_ESCARCHA
+
+    if (a>b){
+        if (a>b){
+            for(a <= 0| a < 10| ++a){}|
+        }
+        else {
+       
+            if (a === b){}
+            elif (a !== b){
+                
+                if (a ==> b){}
+                elif(a ==< b){}
+                elif(!a # b ^ c ){}
+                else{
+                    print()|
+                    print(a[0],"me gustas", true)|
+                    read()|
+                    read('c',false,t,a>0)|
+                    print(read("scr/app/com/navidad"))|
+                }|
+
+            }|
+
+        }|
+    }|
+}
