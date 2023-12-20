@@ -1,23 +1,13 @@
 
-"
-String multilinea
-"
-"String de una sola linea"
-/_
-El nombre de este archivo es gracias a Mario Barboza. Att:Camilo un guapo
+< > === ==> ==< !==
+/_ 
+esto es un comentario multilinea
 _/
-float camilo <= 69.0001 | @soy un comentario de una sola linea
-int marioBarboza |
-/_ hola me gusta el pollo frito_/
---marioBarboza
+45.0
+100
+"hola"
+101
 /_
-,
-
-pero, bueno chavales todo bien, todo correcto y yo que me alegro
-_/
-print(),
-,
-,,,,
-15 + ++camilo
-int prueba <= 1 -- -1 | 
-if (camilo === marioBarboza)
+102
+45id
+103
