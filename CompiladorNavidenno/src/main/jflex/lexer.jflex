@@ -92,19 +92,19 @@ EMPTY_SPACE = [ \t]* | {END_LINE}
 
 //Expresiones de comentarios
 LINE_COMMENT = "@" .* {END_LINE}? // e.g: @ This is a comment
-MULTI_lINE_COMMENT = "/_" [^_]* "_/" // e.g: /_ This is a comment _/
+MULTI_lINE_COMMENT = "/_"(.|\r?\n)*?"_/" // e.g: /_ This is a comment _/
 FULL_COMMENT = {LINE_COMMENT} | {MULTI_lINE_COMMENT} // e.g: @ This is a comment or /_ This is a comment _/
 
 //Expresiones de Números e identificadores
 DIGIT = [0-9]
-INT_NUMBER = 0 | -?[1-9]{DIGIT}*
+INT_NUMBER = 0|-?[1-9]{DIGIT}*
 
 LETTER = [a-zA-Z]
-FLOATING_NUMBER = {INT_NUMBER}\.{DIGIT}+ // e.g: 1.0e-10
-IDENTIFIER = {LETTER}[{LETTER}{DIGIT}]*
+FLOATING_NUMBER = {INT_NUMBER}\.{1}{DIGIT}+ // e.g: 1.0e-10
+IDENTIFIER = ({LETTER}|[\_])[{LETTER}{DIGIT}]*
 CHAR_L = \'.\'
 SEPARATOR = \,
-
+ERRORS = \.
 %state STRING
 
 %%
@@ -182,6 +182,7 @@ SEPARATOR = \,
 // IDENTIFICADOR
 {IDENTIFIER} { return new Symbol(sym.PERSONA, yytext()); }
 {SEPARATOR} { return new Symbol(sym.SEPARADOR_BASTON, yytext());}
+{ERRORS} { return new Symbol(sym.MEDIAS_ERROR, yytext()); }
 
 // LITERALES
 {CHAR_L} { return new Symbol(sym.L_CLAUS_CHAR, yytext()); }
@@ -200,7 +201,8 @@ SEPARATOR = \,
 
 }
 // Lexemas no reconocidos
-[^] { 
+
+    [^] { 
     // Acción a tomar para cualquier caracter no reconocido
     return new Symbol(sym.MEDIAS_ERROR, yytext()); 
 }
