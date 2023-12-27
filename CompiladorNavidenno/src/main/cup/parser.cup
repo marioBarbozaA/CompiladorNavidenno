@@ -26,7 +26,7 @@ action code {:
         }
         System.out.println(" ");
       }
-  :}
+  }
 :}
 
 parser code {:
@@ -164,7 +164,9 @@ precedence left REY_BALTASAR_NOT;
 start with NAVIDAD;
 
 
-NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA {:imprimirTablasSimbolos();:};
+NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA {:
+ System.out.println("Hola, soy el parser de Navidad");
+ imprimirTablasSimbolos();:};
 
 T_COPO::= COLACHO_INT:tipo
  {: RESULT = tipo;:}
@@ -179,35 +181,37 @@ T_COPO::= COLACHO_INT:tipo
  | VIEJITO_PASCUERO_ARRAY:tipo
  {: RESULT = tipo;:};
 
-l_COPO::= L_COLACHO_INT: lit
+l_COPO::= L_COLACHO_INT:lit
   {: RESULT = lit; :}
-| L_JOULUPUKKI_FLOAT: lit
+| L_JOULUPUKKI_FLOAT:lit
   {: RESULT = lit; :}
-| L_CLAUS_CHAR: lit
+| L_CLAUS_CHAR:lit
   {: RESULT = lit; :}
-| L_SANTA_STRING: lit
+| L_SANTA_STRING:lit
   {: RESULT = lit; :}
-| L_VIEJITO_PASCUERO_ARRAY: lit
+| L_VIEJITO_PASCUERO_ARRAY:lit
   {: RESULT = lit; :}
-| PAPA_NOEL_TRUE
+| PAPA_NOEL_TRUE:lit
   {: RESULT = lit; :}
-| PAPA_NOEL_FALSE
+| PAPA_NOEL_FALSE:lit
   {: RESULT = lit; :}
 ;
 
-l_COPO::= L_COLACHO_INT | L_JOULUPUKKI_FLOAT | L_CLAUS_CHAR | L_SANTA_STRING | L_VIEJITO_PASCUERO_ARRAY|PAPA_NOEL_TRUE|PAPA_NOEL_FALSE;
 ARG_COPO::= EXPRESION_BOTA | ARG_COPO SEPARADOR_BASTON EXPRESION_BOTA;
 
 FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_REGALO;
 
 FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA; // function int myFuncion (){return 1}
  
-DEF_JUGUETE::= FUNCTION_VILLANCICOS ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO | // FUNCTION MAIN ()   
-              FUNCTION_VILLANCICOS T_COPO PERSONA ABRE_CUENTO CIERRE_CUENTO | // function int myFuncion ()
-              FUNCTION_VILLANCICOS T_COPO PERSONA ABRE_CUENTO PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
+DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO | // FUNCTION MAIN ()   
+              {::}
+              FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO | // function int myFuncion ()
+              {::}
+              FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO
+              {::} PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
 
 PARAMETROS_PALETAS::= PARAMETRO_PALETA | PARAMETROS_PALETAS SEPARADOR_BASTON PARAMETRO_PALETA;
-PARAMETRO_PALETA::= T_COPO PERSONA;
+PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id {::};
 
 CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO;//{CODIGO}
 
@@ -241,19 +245,27 @@ ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
 
 LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;
 
-ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO PERSONA   | // local int a
-                    LOCAL_MUERDAGO T_COPO PERSONA ENTREGA EXPRESION_BOTA  | // local int a <= 1
-                    PERSONA ENTREGA EXPRESION_BOTA  | // a <= 1|
-                    LOCAL_MUERDAGO T_COPO ELEMENTO_ARRAY_DULCE  | // local int a[1]
-                    LOCAL_MUERDAGO T_COPO ELEMENTO_ARRAY_DULCE ENTREGA l_ARRAY_TAMAL  | // local int a[4] <= {1,2,3,4}
-                    ELEMENTO_ARRAY_DULCE ENTREGA EXPRESION_BOTA | // a[0] <= ++a[0]|
-                    ELEMENTO_ARRAY_DULCE ENTREGA l_ARRAY_TAMAL ; // a[4] <= {1,2,3,4}
+ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
+                    {::}
+                    | LOCAL_MUERDAGO:local T_COPO:tipo PERSONA:id ENTREGA EXPRESION_BOTA  // local int a <= 1
+                    {::}
+                    | PERSONA:id ENTREGA EXPRESION_BOTA // a <= 1| 
+                    {::}
+                    | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array // local int a[1]  
+                    {::}
+                    | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL  // local int a[4] <= {1,2,3,4}
+                    {::}
+                    | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA EXPRESION_BOTA // a[0] <= ++a[0]|
+                    {::}
+                    | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL// a[4] <= {1,2,3,4}
+                    {::} ; 
 
 EXPRESION_BOTA::= l_COPO | PERSONA |
                   ELEMENTO_ARRAY_DULCE | ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO | 
                   CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_REGALOPRIN | EXPRESION_REL_REGALO_COMPRADO | EXPRESION_LOG_REGALO_MANUAL;
 
-ELEMENTO_ARRAY_DULCE::= PERSONA ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE; // a[0][1]
+ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0][1]
+                    {::}; 
 
 l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
 
@@ -280,15 +292,3 @@ EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA | //
 EXPRESION_LOG_REGALO_MANUAL::= EXPRESION_BOTA REY_MELCHOR_COJUNCTION EXPRESION_BOTA | // a ^ b
                         EXPRESION_BOTA REY_GASPAR_DISJUNCTION EXPRESION_BOTA | // a # b
                         REY_BALTASAR_NOT EXPRESION_BOTA; // !a  
-
-NAVIDAD ::= {: 
-  System.out.println("Hola, soy el parser de Navidad");
-  listaTablasSimbolos.put(globalHash, new ArrayList<String>());
-  
-            :}
-            globalVariables funciones
-            {: 
-              imprimirTablasSimbolos();
-              System.out.println("Fin de ejecucion");
-            
-            :};
