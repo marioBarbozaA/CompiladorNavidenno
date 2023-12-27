@@ -607,7 +607,7 @@ class CUP$parser$actions {
     System.out.println("Hola");
   }
   public void adios() {
-    System.out.println("Adios");
+    System.out.println("Adios\n");
   }
 
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
@@ -672,10 +672,9 @@ class CUP$parser$actions {
             {
               Object RESULT =null;
 		
-        System.out.println("Hola, soy el parser de Navidad");
+        hola();
         imprimirTablasSimbolos();
-        System.out.println("Adios, soy el parser de Navidad ");
-
+        adios();
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NAVIDAD",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

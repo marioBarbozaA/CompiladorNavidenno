@@ -10,7 +10,7 @@ action code {:
     System.out.println("Hola");
   }
   public void adios() {
-    System.out.println("Adios");
+    System.out.println("Adios\n");
   }
 
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
@@ -173,10 +173,9 @@ start with NAVIDAD;
 
 NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA 
         {:
-        System.out.println("Hola, soy el parser de Navidad");
+        hola();
         imprimirTablasSimbolos();
-        System.out.println("Adios, soy el parser de Navidad ");
-
+        adios();
         :};
 
 T_COPO::= COLACHO_INT:tipo

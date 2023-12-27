@@ -66,3 +66,7 @@ function main () {
         }|
     }|
 }
+
+function int prueba(int a, char b){
+    local int var <= a|
+}
