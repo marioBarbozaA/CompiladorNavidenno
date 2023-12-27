@@ -15,7 +15,7 @@ action code {:
 
 
     HashMap<String, ArrayList<String>> listaTablasSimbolos = new HashMap<String, ArrayList<String>>();
-    String currentHash ;
+    String currentHash = "";
 
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
@@ -27,6 +27,16 @@ action code {:
         System.out.println(" ");
       }
   }
+    public void cambiarContexto(String nombreFuncion) {
+        currentHash = nombreFuncion;
+        listaTablasSimbolos.put(nombreFuncion, new ArrayList<SymbolTableObject>());
+
+    }
+
+    public void annadirSymbol(SymbolTableObject symbol) {
+    listaTablasSimbolos.get(currentHash).add(symbol);
+  }
+
 :}
 
 parser code {:
@@ -164,9 +174,11 @@ precedence left REY_BALTASAR_NOT;
 start with NAVIDAD;
 
 
-NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA {:
- System.out.println("Hola, soy el parser de Navidad");
- imprimirTablasSimbolos();:};
+NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA 
+        {:
+        System.out.println("Hola, soy el parser de Navidad");
+        imprimirTablasSimbolos();
+        :};
 
 T_COPO::= COLACHO_INT:tipo
  {: RESULT = tipo;:}
