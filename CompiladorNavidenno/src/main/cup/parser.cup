@@ -13,26 +13,25 @@ action code {:
     System.out.println("Adios");
   }
 
-
-    HashMap<String, ArrayList<String>> listaTablasSimbolos = new HashMap<String, ArrayList<String>>();
+    HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
     String currentHash = "";
 
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
         System.out.println("Tabla de simbolos: " + key);
         System.out.println("Variables: ");
-        for (String variable : listaTablasSimbolos.get(key)) {
-          System.out.println(variable);
+        for (SymbolObject variable : listaTablasSimbolos.get(key)) {
+          System.out.println(variable.toString());
         }
         System.out.println(" ");
       }
   }
     public void cambiarContexto(String nombreFuncion) {
         currentHash = nombreFuncion;
-        listaTablasSimbolos.put(nombreFuncion, new ArrayList<SymbolTableObject>());
+        listaTablasSimbolos.put(nombreFuncion, new ArrayList<SymbolObject>());
     }
 
-    public void annadirSymbol(SymbolTableObject symbol) {
+    public void annadirSymbol(SymbolObject symbol) {
     listaTablasSimbolos.get(currentHash).add(symbol);
   }
 :}
@@ -176,6 +175,8 @@ NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA
         {:
         System.out.println("Hola, soy el parser de Navidad");
         imprimirTablasSimbolos();
+        System.out.println("Adios, soy el parser de Navidad ");
+
         :};
 
 T_COPO::= COLACHO_INT:tipo
@@ -213,27 +214,27 @@ FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_
 
 FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA; // function int myFuncion (){return 1}
  
-DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO | // FUNCTION MAIN ()   
+DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO  // FUNCTION MAIN ()   
               {:
               cambiarContexto("main");
-              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function","main")));
+              annadirSymbol(new SymbolObject("function","int","main"));
               :}
-              FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO | // function int myFuncion ()
+              |FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO  // function int myFuncion ()
               {:
               cambiarContexto(id.toString());
-              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function",Tipo.toString(), id.toString())));
+              annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
               :}
-              FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO
+              |FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO
               {:
               cambiarContexto(id.toString());
-              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function",Tipo.toString(), id.toString())));
+              annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
               :} PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
 
 PARAMETROS_PALETAS::= PARAMETRO_PALETA | PARAMETROS_PALETAS SEPARADOR_BASTON PARAMETRO_PALETA;
 
 PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id 
                 {:
-                annadirSymbol(new SymbolTableObject(new SymbolTableObject("param",tipo.toString(), id.toString())));
+                annadirSymbol(new SymbolObject("param",tipo.toString(), id.toString()));
                 :};
 
 CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO;//{CODIGO}
@@ -270,19 +271,19 @@ LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;
 
 ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
                     {:
-                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(), id.toString())));
+                    annadirSymbol(new SymbolObject("local",tipo.toString(), id.toString()));
                     :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo PERSONA:id ENTREGA EXPRESION_BOTA  // local int a <= 1
                     {:
-                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(), id.toString())));
+                    annadirSymbol(new SymbolObject("local",tipo.toString(), id.toString()));
                     :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array // local int a[1]  
                     {:
-                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(),"arr", elem_array.toString())));
+                    annadirSymbol(new SymbolObject("local",tipo.toString()+" arr", elem_array.toString()));
                     :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL  // local int a[4] <= {1,2,3,4}
                     {:
-                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(),"arr", elem_array.toString())));
+                    annadirSymbol(new SymbolObject("local",tipo.toString()+" arr", elem_array.toString()));
                     :}
                     | PERSONA:id ENTREGA EXPRESION_BOTA // a <= 1| 
                     | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA EXPRESION_BOTA // a[0] <= ++a[0]|
@@ -295,7 +296,7 @@ EXPRESION_BOTA::= l_COPO | PERSONA |
 
 ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0]
                     {:
-                    {RESULT = id.toString();:}
+                    RESULT = id.toString();
                     :}; 
 
 l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
