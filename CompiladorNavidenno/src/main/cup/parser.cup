@@ -30,13 +30,11 @@ action code {:
     public void cambiarContexto(String nombreFuncion) {
         currentHash = nombreFuncion;
         listaTablasSimbolos.put(nombreFuncion, new ArrayList<SymbolTableObject>());
-
     }
 
     public void annadirSymbol(SymbolTableObject symbol) {
     listaTablasSimbolos.get(currentHash).add(symbol);
   }
-
 :}
 
 parser code {:
@@ -216,14 +214,27 @@ FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_
 FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA; // function int myFuncion (){return 1}
  
 DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO | // FUNCTION MAIN ()   
-              {::}
+              {:
+              cambiarContexto("main");
+              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function","main")));
+              :}
               FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO | // function int myFuncion ()
-              {::}
+              {:
+              cambiarContexto(id.toString());
+              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function",Tipo.toString(), id.toString())));
+              :}
               FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO
-              {::} PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
+              {:
+              cambiarContexto(id.toString());
+              annadirSymbol(new SymbolTableObject(new SymbolTableObject("function",Tipo.toString(), id.toString())));
+              :} PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
 
 PARAMETROS_PALETAS::= PARAMETRO_PALETA | PARAMETROS_PALETAS SEPARADOR_BASTON PARAMETRO_PALETA;
-PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id {::};
+
+PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id 
+                {:
+                annadirSymbol(new SymbolTableObject(new SymbolTableObject("param",tipo.toString(), id.toString())));
+                :};
 
 CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO;//{CODIGO}
 
@@ -258,26 +269,34 @@ ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
 LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;
 
 ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
-                    {::}
+                    {:
+                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(), id.toString())));
+                    :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo PERSONA:id ENTREGA EXPRESION_BOTA  // local int a <= 1
-                    {::}
-                    | PERSONA:id ENTREGA EXPRESION_BOTA // a <= 1| 
-                    {::}
+                    {:
+                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(), id.toString())));
+                    :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array // local int a[1]  
-                    {::}
+                    {:
+                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(),"arr", elem_array.toString())));
+                    :}
                     | LOCAL_MUERDAGO:local T_COPO:tipo ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL  // local int a[4] <= {1,2,3,4}
-                    {::}
+                    {:
+                    annadirSymbol(new SymbolTableObject(new SymbolTableObject("local",tipo.toString(),"arr", elem_array.toString())));
+                    :}
+                    | PERSONA:id ENTREGA EXPRESION_BOTA // a <= 1| 
                     | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA EXPRESION_BOTA // a[0] <= ++a[0]|
-                    {::}
-                    | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL// a[4] <= {1,2,3,4}
-                    {::} ; 
+                    | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL; // a[4] <= {1,2,3,4}
+ 
 
 EXPRESION_BOTA::= l_COPO | PERSONA |
                   ELEMENTO_ARRAY_DULCE | ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO | 
                   CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_REGALOPRIN | EXPRESION_REL_REGALO_COMPRADO | EXPRESION_LOG_REGALO_MANUAL;
 
-ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0][1]
-                    {::}; 
+ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0]
+                    {:
+                    {RESULT = id.toString();:}
+                    :}; 
 
 l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
 
