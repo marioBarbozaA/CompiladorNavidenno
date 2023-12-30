@@ -9,6 +9,9 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.util.List;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -632,6 +635,42 @@ class CUP$parser$actions {
     listaTablasSimbolos.get(currentHash).add(symbol);
   }
 
+
+public void exportarTablaSimbolosHTML() {
+    List<String[]> data = new ArrayList<>();
+    data.add(new String[] {"Tabla", "Tipo Entrada", "Nombre", "Tipo Dato"});
+
+    for (Map.Entry<String, ArrayList<SymbolObject>> entry : listaTablasSimbolos.entrySet()) {
+        for (SymbolObject value : entry.getValue()) {
+            data.add(new String[] {entry.getKey(), value.getEntrada(), value.getID(), value.getTipo()});
+        }
+    }
+
+    StringBuilder htmlBuilder = new StringBuilder();
+    htmlBuilder.append("<html><head><title>Tabla de Símbolos</title></head><body>");
+    htmlBuilder.append("<table border='1'>");
+
+    for (String[] row : data) {
+        htmlBuilder.append("<tr>");
+        for (String cell : row) {
+            htmlBuilder.append("<td>").append(cell).append("</td>");
+        }
+        htmlBuilder.append("</tr>");
+    }
+
+    htmlBuilder.append("</table></body></html>");
+
+    // Escribe el HTML en un archivo
+    try (FileWriter writer = new FileWriter("src/test/java/com/navidad/tabla_simbolos.html")) {
+        writer.write(htmlBuilder.toString());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    System.out.println("Tabla de símbolos exportada a tabla_simbolos.html");
+}
+  
+
   private final parser parser;
 
   /** Constructor */
@@ -673,6 +712,7 @@ class CUP$parser$actions {
               Object RESULT =null;
 		
         hola();
+        exportarTablaSimbolosHTML();
         imprimirTablasSimbolos();
         adios();
         
