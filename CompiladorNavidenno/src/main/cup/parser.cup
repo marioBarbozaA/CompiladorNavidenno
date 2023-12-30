@@ -39,22 +39,39 @@ action code {:
     listaTablasSimbolos.get(currentHash).add(symbol);
   }
 
-
 public void exportarTablaSimbolosHTML() {
     List<String[]> data = new ArrayList<>();
-    data.add(new String[] {"Tabla", "Tipo Entrada", "Nombre", "Tipo Dato"});
+    data.add(new String[]{"Tabla", "Tipo Entrada", "Nombre", "Tipo Dato"});
 
     for (Map.Entry<String, ArrayList<SymbolObject>> entry : listaTablasSimbolos.entrySet()) {
         for (SymbolObject value : entry.getValue()) {
-            data.add(new String[] {entry.getKey(), value.getEntrada(), value.getID(), value.getTipo()});
+            data.add(new String[]{entry.getKey(), value.getEntrada(), value.getID(), value.getTipo()});
         }
     }
 
     StringBuilder htmlBuilder = new StringBuilder();
-    htmlBuilder.append("<html><head><title>Tabla de Símbolos</title></head><body>");
-    htmlBuilder.append("<table border='1'>");
+    htmlBuilder.append("<html><head><title>Tabla de Símbolos</title>");
+    htmlBuilder.append("<style>");
+    htmlBuilder.append("@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');");
+    htmlBuilder.append("table { border-collapse: separate; width: 100%; box-shadow: 0 2px 3px rgba(0,0,0,0.1);");
+    htmlBuilder.append("font-family: 'Roboto', sans-serif; color: #333; margin: 25px 0; border-spacing: 0; }");
+    htmlBuilder.append("thead { background-color: #8A33FF; color: #FFF; }");
+    htmlBuilder.append("th { font-weight: 700; padding: 12px 15px; text-align: left; }");
+    htmlBuilder.append("td { border-top: 1px solid #DDD; padding: 12px 15px; text-align: left; }");
+    htmlBuilder.append("tbody tr:nth-child(odd) { background-color: #F6F6F6; }");
+    htmlBuilder.append("tbody tr:nth-child(even) { background-color: #E9E9E9; }");
+    htmlBuilder.append("</style></head><body><table>");
 
-    for (String[] row : data) {
+    // Aquí añadimos la cabecera de la tabla
+    htmlBuilder.append("<thead><tr>");
+    for (String header : data.get(0)) {
+        htmlBuilder.append("<th>").append(header).append("</th>");
+    }
+    htmlBuilder.append("</tr></thead><tbody>");
+
+    // Luego el resto de los datos
+    for (int i = 1; i < data.size(); i++) {
+        String[] row = data.get(i);
         htmlBuilder.append("<tr>");
         for (String cell : row) {
             htmlBuilder.append("<td>").append(cell).append("</td>");
@@ -62,7 +79,7 @@ public void exportarTablaSimbolosHTML() {
         htmlBuilder.append("</tr>");
     }
 
-    htmlBuilder.append("</table></body></html>");
+    htmlBuilder.append("</tbody></table></body></html>");
 
     // Escribe el HTML en un archivo
     try (FileWriter writer = new FileWriter("src/test/java/com/navidad/tabla_simbolos.html")) {
@@ -73,6 +90,7 @@ public void exportarTablaSimbolosHTML() {
 
     System.out.println("Tabla de símbolos exportada a tabla_simbolos.html");
 }
+
   
 :}
 
