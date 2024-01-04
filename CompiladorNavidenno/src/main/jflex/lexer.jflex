@@ -34,13 +34,16 @@ import java.io.IOException;
             while ((token = next_token()).sym != sym.EOF) {
                 if (token.sym == sym.MEDIAS_ERROR) {
                     Symbol error = symbol(token.sym, token.value);
+                    System.out.println("Error ESTOY AQUIIIIIIIIII: PROBANDOOOOOO" );
                     System.err.println(sym.terminalNames[error.sym]+ " "   + error.value + " en la linea " + error.left + " y columna " + error.right);
                 } else {
+                            
                     tokens.add(symbol(token.sym, token.value));
                 }
 
             }
         } catch (IOException e) {
+            System.out.println("Error: PROBANDOOOOOO" );
             System.err.println("Error: " + e.getMessage());
         }
         return tokens;

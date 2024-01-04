@@ -71,6 +71,21 @@ function PROBRANDO probandoError(){
     
 } 
 
+function PROBANDO PROBANDO probandoErrores(){
+
+} 
+function int probandoErrores2(){
+    {}
+    for{}
+} 
+
+function int fin(){
+    |
+} 
+
+function int fin2(){
+    local int a
+} 
 function int prueba(int a, char b){
     local int var <= a|
 }

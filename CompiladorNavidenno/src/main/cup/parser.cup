@@ -118,16 +118,17 @@ parser code {:
   */
   public void syntax_error(Symbol cur_token){
     if (cur_token.value == null) {
-      System.err.println("Syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym);
+      System.err.println("Chimenea cerrada en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym);
     } else {
-      System.err.println("Syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym + ", value: " + cur_token.value);
+      System.err.println("Chimenea cerrada en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym + ", valor: " + cur_token.value);
+      System.out.println("Buscando otra entrada...");
     }    
   } 
   // este llama a report_fatal_error("Couldn't repair and continue parse", null); // creo que se puede hacer override de report_fatal_error.
   public void unrecovered_syntax_error(Symbol cur_token) throws java.lang.Exception {
-    throw new Exception("Unrecovered syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym + ", value: " + cur_token.value);
+    throw new Exception("No se han entregado regalos en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym + ", valor: " + cur_token.value);
   }
-  
+
 :}
 
 scan with {: return lex.next_token(); :};
@@ -322,14 +323,15 @@ PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id
                 annadirSymbol(new SymbolObject("param",tipo.toString(), id.toString()));
                 :};
 
-CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO;//{CODIGO}
+CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO | ABRE_REGALO error CIERRA_REGALO;//{CODIGO}
 
 RETORNO_BURRITO_SABANERO::= ENVIA_RETURN EXPRESION_BOTA;
 
 LINEA_LAZO::= ASIGNACION_GORRO FIN_REGALO |  EXPRESION_BOTA FIN_REGALO | //a <= 1| |
               CORTA_BREAK FIN_REGALO | RETORNO_BURRITO_SABANERO FIN_REGALO | 
               FOR_FANTASMA_PRESENTE FIN_REGALO | DO_UNTIL_FANTASMA_PASADO FIN_REGALO |
-              IF_JUANITO_ESCARCHA FIN_REGALO; // ESTE ULTIMO CREO QUE HAY QUE CAMBIARLO POR UNA DEFINICION 
+              IF_JUANITO_ESCARCHA FIN_REGALO | // ESTE ULTIMO CREO QUE HAY QUE CAMBIARLO POR UNA DEFINICION 
+              error FIN_REGALO; // a <= 1| |
 
 CALL_FUNCTION_FANTASMA_FUTURO::=PERSONA ABRE_CUENTO  CIERRE_CUENTO | // myFuncion()
                                 PERSONA ABRE_CUENTO ARG_COPO CIERRE_CUENTO |//myfun(...)
