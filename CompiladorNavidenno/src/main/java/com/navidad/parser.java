@@ -593,11 +593,28 @@ public class parser extends java_cup.runtime.lr_parser {
     }
 
 
+
+  // https://www2.cs.tum.edu/projects/cup/docs.php#errors:~:text=4.%20Customizing%20the%20Parser
+
   Lexer lex;
 
   public parser(Lexer lex) {
     this.lex = lex;
     this.symbolFactory = new DefaultSymbolFactory();
+  }
+
+  // Se tiene que hacer un override a los metodos para atrapar los errores
+  // Esta llama a report_error("Syntax error", null);
+  public void syntax_error(Symbol token){
+    if (token.value == null) {
+      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym);
+    } else {
+      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
+    }    
+  } 
+  // este llama a report_fatal_error("Couldn't repair and continue parse", null);.
+  public void unrecovered_syntax_error(Symbol token) throws java.lang.Exception {
+    throw new Exception("Unrecovered syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
   }
 
 

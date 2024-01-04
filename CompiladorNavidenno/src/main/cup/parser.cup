@@ -104,18 +104,20 @@ parser code {:
     this.lex = lex;
     this.symbolFactory = new DefaultSymbolFactory();
   }
+
   // Se tiene que hacer un override a los metodos para atrapar los errores
   // Esta llama a report_error("Syntax error", null);
   public void syntax_error(Symbol token){
     if (token.value == null) {
-      System.err.println("Syntax error at line " + lex.line() + ", column " + lex.column() + ": " + token.sym);
+      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym);
     } else {
-      System.err.println("Syntax error at line " + lex.line() + ", column " + lex.column() + ": " + token.sym + ", value: " + token.value);
+      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
     }    
   } 
-  public void unrecovered_syntax_error(Symbol token) trhows java.lang.Exception {
-    
-    throw.new Exception("Unrecovered syntax error at line " + lex.line() + ", column " + lex.column() + ": " + token.sym + ", value: " + token.value);
+  // este llama a report_fatal_error("Couldn't repair and continue parse", null);.
+  public void unrecovered_syntax_error(Symbol token) throws java.lang.Exception {
+    throw new Exception("Unrecovered syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
+  }
 :}
 
 scan with {: return lex.next_token(); :};
