@@ -67,6 +67,10 @@ function main () {
     }|
 }
 
+function PROBRANDO probandoError(){
+    
+} 
+
 function int prueba(int a, char b){
     local int var <= a|
 }

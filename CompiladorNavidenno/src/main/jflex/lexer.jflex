@@ -9,6 +9,7 @@ import java.io.IOException;
 %%
 
 %class Lexer
+%public
 %unicode
 %cup
 %line
@@ -112,27 +113,27 @@ ERRORS = \.
 
 //Palabras reservadas
 //No se pueden definiir como constartes, hay que ponerlo como una cadena de texto
-<YYINITIAL>  "function"  { return new Symbol(sym.FUNCTION_VILLANCICOS, "function"); }
-<YYINITIAL>  "local"  { return new Symbol(sym.LOCAL_MUERDAGO, "local"); }
-<YYINITIAL>  "int"  { return new Symbol(sym.COLACHO_INT, "int"); }
-<YYINITIAL>  "float"  { return new Symbol(sym.JOULUPUKKI_FLOAT, "float"); }
-<YYINITIAL>  "string"  { return new Symbol(sym.SANTA_STRING, "string"); }
-<YYINITIAL>  "bool"  { return new Symbol(sym.PAPA_NOEL_BOOLEAN, "bool"); }
-<YYINITIAL>  "char"  { return new Symbol(sym.CLAUS_CHAR, "char"); }
-<YYINITIAL>  "arr"  { return new Symbol(sym.VIEJITO_PASCUERO_ARRAY, "arr"); }
-<YYINITIAL>  "true"  { return new Symbol(sym.PAPA_NOEL_TRUE, "true"); }
-<YYINITIAL>  "false"  { return new Symbol(sym.PAPA_NOEL_FALSE, "false"); }
-<YYINITIAL>  "if"  { return new Symbol(sym.ELFO_IF, "if"); }
-<YYINITIAL>  "else"  { return new Symbol(sym.DUENDE_ELSE, "else"); }
-<YYINITIAL>  "elif"  { return new Symbol(sym.HADA_ELIF, "elif"); }
-<YYINITIAL>  "for"  { return new Symbol(sym.ENVUELVE_FOR, "for"); }
-<YYINITIAL>  "do"  { return new Symbol(sym.HACE_DO, "do"); }
-<YYINITIAL>  "until"  { return new Symbol(sym.REVISA_UNTIL, "until"); }
-<YYINITIAL>  "return"  { return new Symbol(sym.ENVIA_RETURN, "return"); }
-<YYINITIAL>  "break"  { return new Symbol(sym.CORTA_BREAK, "break"); }
-<YYINITIAL>  "print"  { return new Symbol(sym.NARRA_PRINT, "print"); }
-<YYINITIAL>  "read" { return new Symbol(sym.ESCUCHA_READ, "read"); }
-<YYINITIAL>  "main"  { return new Symbol(sym.ESTRELLA_MAIN, "main"); }
+<YYINITIAL>  "function"  { return  symbol(sym.FUNCTION_VILLANCICOS, "function"); }
+<YYINITIAL>  "local"  { return  symbol(sym.LOCAL_MUERDAGO, "local"); }
+<YYINITIAL>  "int"  { return  symbol(sym.COLACHO_INT, "int"); }
+<YYINITIAL>  "float"  { return  symbol(sym.JOULUPUKKI_FLOAT, "float"); }
+<YYINITIAL>  "string"  { return  symbol(sym.SANTA_STRING, "string"); }
+<YYINITIAL>  "bool"  { return  symbol(sym.PAPA_NOEL_BOOLEAN, "bool"); }
+<YYINITIAL>  "char"  { return  symbol(sym.CLAUS_CHAR, "char"); }
+<YYINITIAL>  "arr"  { return  symbol(sym.VIEJITO_PASCUERO_ARRAY, "arr"); }
+<YYINITIAL>  "true"  { return  symbol(sym.PAPA_NOEL_TRUE, "true"); }
+<YYINITIAL>  "false"  { return  symbol(sym.PAPA_NOEL_FALSE, "false"); }
+<YYINITIAL>  "if"  { return  symbol(sym.ELFO_IF, "if"); }
+<YYINITIAL>  "else"  { return  symbol(sym.DUENDE_ELSE, "else"); }
+<YYINITIAL>  "elif"  { return  symbol(sym.HADA_ELIF, "elif"); }
+<YYINITIAL>  "for"  { return  symbol(sym.ENVUELVE_FOR, "for"); }
+<YYINITIAL>  "do"  { return  symbol(sym.HACE_DO, "do"); }
+<YYINITIAL>  "until"  { return  symbol(sym.REVISA_UNTIL, "until"); }
+<YYINITIAL>  "return"  { return  symbol(sym.ENVIA_RETURN, "return"); }
+<YYINITIAL>  "break"  { return  symbol(sym.CORTA_BREAK, "break"); }
+<YYINITIAL>  "print"  { return  symbol(sym.NARRA_PRINT, "print"); }
+<YYINITIAL>  "read" { return  symbol(sym.ESCUCHA_READ, "read"); }
+<YYINITIAL>  "main"  { return  symbol(sym.ESTRELLA_MAIN, "main"); }
 
 
 <YYINITIAL> {
@@ -142,52 +143,52 @@ ERRORS = \.
 // comentarios
 \" { string.setLength(0); yybegin(STRING); }
 //Operaciones de control de bloques
-{OPEN_PARENTHESIS} { return new Symbol(sym.ABRE_CUENTO, yytext()); }
-{CLOSE_PARENTHESIS} { return new Symbol(sym.CIERRE_CUENTO, yytext()); }
-{OPEN_BRACKET} { return new Symbol(sym.ABRE_EMPAQUE, yytext()); }
-{CLOSE_BRACKET} { return new Symbol(sym.CIERRA_EMPAQUE, yytext()); }
-{OPEN_BRACE} { return new Symbol(sym.ABRE_REGALO, yytext()); }
-{CLOSE_BRACE} { return new Symbol(sym.CIERRA_REGALO, yytext()); }
-{ASSIGNTMENT} { return new Symbol(sym.ENTREGA, yytext()); }
-{PIPE_DELIMITER} { return new Symbol(sym.FIN_REGALO, yytext()); }
+{OPEN_PARENTHESIS} { return  symbol(sym.ABRE_CUENTO, yytext()); }
+{CLOSE_PARENTHESIS} { return  symbol(sym.CIERRE_CUENTO, yytext()); }
+{OPEN_BRACKET} { return  symbol(sym.ABRE_EMPAQUE, yytext()); }
+{CLOSE_BRACKET} { return  symbol(sym.CIERRA_EMPAQUE, yytext()); }
+{OPEN_BRACE} { return  symbol(sym.ABRE_REGALO, yytext()); }
+{CLOSE_BRACE} { return  symbol(sym.CIERRA_REGALO, yytext()); }
+{ASSIGNTMENT} { return  symbol(sym.ENTREGA, yytext()); }
+{PIPE_DELIMITER} { return  symbol(sym.FIN_REGALO, yytext()); }
 
 //Operaciones unarias
-{DECREMENT} { return new Symbol(sym.GRINCH_DECREMENT, yytext()); }
-{INCREMENT} { return new Symbol(sym.QUIEN_INCREMENT, yytext()); }
+{DECREMENT} { return  symbol(sym.GRINCH_DECREMENT, yytext()); }
+{INCREMENT} { return  symbol(sym.QUIEN_INCREMENT, yytext()); }
 
 //Operacones binarias
-{SUM} { return new Symbol(sym.RODOLFO_SUM, yytext()); }
-{DECREASE} { return new Symbol(sym.TRUENO_DECREASE, yytext()); }
-{FLOAT_DIVISION} { return new Symbol(sym.RAYO_FLOAT_DIVISION, yytext()); }
-{INT_DIVISION} { return new Symbol(sym.RELAMPAGO_INT_DIVISION, yytext()); }
-{ELEVATE} { return new Symbol(sym.SALTARIN_ELEVATE, yytext()); }
-{PRODUCT} { return new Symbol(sym.COMETA_PRODUCT, yytext()); }
-{MODULE} { return new Symbol(sym.CUPIDO_MODULE, yytext()); }
+{SUM} { return  symbol(sym.RODOLFO_SUM, yytext()); }
+{DECREASE} { return  symbol(sym.TRUENO_DECREASE, yytext()); }
+{FLOAT_DIVISION} { return  symbol(sym.RAYO_FLOAT_DIVISION, yytext()); }
+{INT_DIVISION} { return  symbol(sym.RELAMPAGO_INT_DIVISION, yytext()); }
+{ELEVATE} { return  symbol(sym.SALTARIN_ELEVATE, yytext()); }
+{PRODUCT} { return  symbol(sym.COMETA_PRODUCT, yytext()); }
+{MODULE} { return  symbol(sym.CUPIDO_MODULE, yytext()); }
 
 //Operaciones de comparacion
-{EQUAL} { return new Symbol(sym.ELFO_EQUAL, yytext()); }
-{NOT_EQUAL} { return new Symbol(sym.ELFO_NOT_EQUAL, yytext()); }
-{GREATER} { return new Symbol(sym.ELFO_GREATER, yytext()); }
-{LESS} { return new Symbol(sym.ELFO_LESS, yytext()); }
-{GREATER_EQUAL} { return new Symbol(sym.ELFO_GREATER_EQUAL, yytext()); }
-{LESS_EQUAL} { return new Symbol(sym.ELFO_LESS_EQUAL, yytext()); }
+{EQUAL} { return  symbol(sym.ELFO_EQUAL, yytext()); }
+{NOT_EQUAL} { return  symbol(sym.ELFO_NOT_EQUAL, yytext()); }
+{GREATER} { return  symbol(sym.ELFO_GREATER, yytext()); }
+{LESS} { return  symbol(sym.ELFO_LESS, yytext()); }
+{GREATER_EQUAL} { return  symbol(sym.ELFO_GREATER_EQUAL, yytext()); }
+{LESS_EQUAL} { return  symbol(sym.ELFO_LESS_EQUAL, yytext()); }
 
 //Operaciones logicas
-{DISJUNCTION} { return new Symbol(sym.REY_GASPAR_DISJUNCTION, yytext()); }
-{COJUNCTION} { return new Symbol(sym.REY_MELCHOR_COJUNCTION, yytext()); }
-{NOT} { return new Symbol(sym.REY_BALTASAR_NOT, yytext()); }
+{DISJUNCTION} { return  symbol(sym.REY_GASPAR_DISJUNCTION, yytext()); }
+{COJUNCTION} { return  symbol(sym.REY_MELCHOR_COJUNCTION, yytext()); }
+{NOT} { return  symbol(sym.REY_BALTASAR_NOT, yytext()); }
 
 
 
 // IDENTIFICADOR
-{IDENTIFIER} { return new Symbol(sym.PERSONA, yytext()); }
-{SEPARATOR} { return new Symbol(sym.SEPARADOR_BASTON, yytext());}
-{ERRORS} { return new Symbol(sym.MEDIAS_ERROR, yytext()); }
+{IDENTIFIER} { return  symbol(sym.PERSONA, yytext()); }
+{SEPARATOR} { return  symbol(sym.SEPARADOR_BASTON, yytext());}
+{ERRORS} { return  symbol(sym.MEDIAS_ERROR, yytext()); }
 
 // LITERALES
-{CHAR_L} { return new Symbol(sym.L_CLAUS_CHAR, yytext()); }
-{FLOATING_NUMBER} { return new Symbol(sym.L_JOULUPUKKI_FLOAT, yytext()); }
-{INT_NUMBER} { return new Symbol(sym.L_COLACHO_INT, yytext()); }
+{CHAR_L} { return  symbol(sym.L_CLAUS_CHAR, yytext()); }
+{FLOATING_NUMBER} { return  symbol(sym.L_JOULUPUKKI_FLOAT, yytext()); }
+{INT_NUMBER} { return  symbol(sym.L_COLACHO_INT, yytext()); }
 
 <STRING> {
     \" { yybegin(YYINITIAL); return symbol(sym.L_SANTA_STRING, string.toString()); }
@@ -204,7 +205,7 @@ ERRORS = \.
 
     [^] { 
     // Acción a tomar para cualquier caracter no reconocido
-    return new Symbol(sym.MEDIAS_ERROR, yytext()); 
+    return  symbol(sym.MEDIAS_ERROR, yytext()); 
 }
 
 

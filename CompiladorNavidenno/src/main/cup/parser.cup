@@ -106,18 +106,28 @@ parser code {:
   }
 
   // Se tiene que hacer un override a los metodos para atrapar los errores
-  // Esta llama a report_error("Syntax error", null);
-  public void syntax_error(Symbol token){
-    if (token.value == null) {
-      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym);
+  // Esta llama a report_error("Syntax error", null); // creo que se puede hacer override de report_fatal_error
+
+  //Tener en cuenta la sintaxis de los errores en la documentacion de CUP
+  // La expresion de error se deja al final de cada produccion
+  //Es diferente al ejemplo del profe, no es necesario tener que crear una expresion de error para cada produccion
+  /*
+  stmt ::= expr SEMI | while_stmt SEMI | if_stmt SEMI | ... |
+	     error SEMI
+	     ;
+  */
+  public void syntax_error(Symbol cur_token){
+    if (cur_token.value == null) {
+      System.err.println("Syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym);
     } else {
-      System.err.println("Syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
+      System.err.println("Syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym + ", value: " + cur_token.value);
     }    
   } 
-  // este llama a report_fatal_error("Couldn't repair and continue parse", null);.
-  public void unrecovered_syntax_error(Symbol token) throws java.lang.Exception {
-    throw new Exception("Unrecovered syntax error at line " + token.left + ", column " + token.right + ": " + token.sym + ", value: " + token.value);
+  // este llama a report_fatal_error("Couldn't repair and continue parse", null); // creo que se puede hacer override de report_fatal_error.
+  public void unrecovered_syntax_error(Symbol cur_token) throws java.lang.Exception {
+    throw new Exception("Unrecovered syntax error at line " + cur_token.left + ", column " + cur_token.right + ": " + cur_token.sym + ", value: " + cur_token.value);
   }
+  
 :}
 
 scan with {: return lex.next_token(); :};
@@ -287,7 +297,7 @@ ARG_COPO::= EXPRESION_BOTA | ARG_COPO SEPARADOR_BASTON EXPRESION_BOTA;
 
 FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_REGALO;
 
-FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA; // function int myFuncion (){return 1}
+FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA | error DEF_JUGUETE CODIGO_ENVOLTURA ; // function int myFuncion (){return 1}
  
 DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO  // FUNCTION MAIN ()   
               {:
