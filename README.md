@@ -26,31 +26,33 @@ mvn clean cup:generate jflex:generate compile exec:java
 El proyecto CompiladorNavideño está organizado de la siguiente manera:
 
 ```bash
-────CompiladorNavidenno
-├───src
-│ ├───main
-│ │ ├───cup
-│ │ └───parser.cup
-│ │ ├───java
-│ │ │ └───com
-│ │ │ └───navidad
-│ │ │ ├───App.java
-│ │ │ ├───Lexer.java
-│ │ │ ├───parser.java
-│ │ │ ├───sym.java
-│ │ │ └───Table.java
-│ │ └───jflex
-│ │ └───lexer.jflex
-│ └───test
-│ └───java
-│ └───com
-│ └───navidad
-│ ├───AppTest.java
-│ ├───Carta_a_Santa.html
-│ └───Carta_a_Santa.txt
-├───target
-│
-└───pom.xml
+────CompiladorNavidenno 
+    ├───src 
+    │   ├───main 
+    │   │   ├───cup 
+    │   │       └───parser.cup 
+    │   │   ├───java 
+    │   │   │   └───com 
+    │   │   │       └───navidad 
+    │   │   │           ├───App.java 
+    │   │   │           ├───Lexer.java 
+    │   │   │           ├───parser.java 
+    │   │   │           ├───sym.java 
+    │   │   │           ├───SymbolObject.java 
+    │   │   │           └───Table.java 
+    │   │   └───jflex 
+    │   │       └───lexer.jflex 
+    │   └───test 
+    │       └───java 
+    │           └───com 
+    │               └───navidad 
+    │                   ├───AppTest.java 
+    │                   ├───Carta_a_Santa.html 
+    │                   ├───Tabla_simbolos.html 
+    │                   └───Carta_a_Santa.txt 
+    ├───target 
+    │    
+    └───pom.xml 
 ```
 
 ## 💡 Notas Importantes
