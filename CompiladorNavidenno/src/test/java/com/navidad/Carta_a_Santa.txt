@@ -8,6 +8,10 @@ function main () {
     a <= 1|  
     local int a <= 1|
     local int a|
+    {}  @ se deberia caer con eso xd
+    []
+    A^1|
+    local int camilo|
     local int a[4] <= {1,2,3,4}|
     a[4] <= {1,2,3,4}|
 
@@ -67,25 +71,8 @@ function main () {
     }|
 }
 
-function PROBRANDO probandoError(){
-    
-} 
 
-function PROBANDO PROBANDO probandoErrores(){
-
-} 
-function int probandoErrores2(){
-    {}
-    for{}
-} 
-
-function int fin(){
-    |
-} 
-
-function int fin2(){
-    local int a
-} 
 function int prueba(int a, char b){
     local int var <= a|
+    local int var2 >= 3|
 }
