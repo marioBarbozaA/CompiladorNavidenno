@@ -18,7 +18,7 @@ import java.io.IOException;
 %{
     StringBuffer string = new StringBuffer();
 
-
+    
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -27,7 +27,7 @@ import java.io.IOException;
         return new Symbol(type, yyline, yycolumn, value);
     }
 
-    public List<Symbol> getTokens() {
+    /*public List<Symbol> getTokens() {
         List<Symbol> tokens = new ArrayList<Symbol>();
         Symbol token;
         try {
@@ -45,7 +45,34 @@ import java.io.IOException;
             System.err.println("Error: " + e.getMessage());
         }
         return tokens;
+    }*/
+
+    public List<Symbol> getTokens() {
+    List<Symbol> tokens = new ArrayList<Symbol>();
+    Symbol token;
+
+    while (true) {
+        try {
+            token = next_token();
+            if (token.sym == sym.EOF) {
+                break;
+            }
+
+            if (token.sym == sym.MEDIAS_ERROR) {
+                Symbol error = symbol(token.sym, token.value);
+                System.err.println(sym.terminalNames[error.sym] + " " + error.value + " en la línea " + error.left + " y columna " + error.right);
+            } 
+            
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            break;
+        }
+        tokens.add(symbol(token.sym, token.value));
     }
+
+    return tokens;
+}
+
 %}
 //Inicio de las expresiones regulares
 

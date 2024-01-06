@@ -1,3 +1,4 @@
+
 function main () {
  /_ pruebas
  del 
@@ -8,8 +9,8 @@ function main () {
     a <= 1|  
     local int a <= 1|
     local int a|
-    {}  @ se deberia caer con eso xd
-    []
+    @ se deberia caer con eso xd
+    
     A^1|
     local int camilo|
     local int a[4] <= {1,2,3,4}|
@@ -69,10 +70,12 @@ function main () {
 
         }|
     }|
+
 }
 
 
 function int prueba(int a, char b){
     local int var <= a|
-    local int var2 >= 3|
 }
+
+==>
