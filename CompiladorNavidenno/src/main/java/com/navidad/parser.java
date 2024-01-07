@@ -631,14 +631,22 @@ public class parser extends java_cup.runtime.lr_parser {
   public void syntax_error(Symbol cur_token){
     if (cur_token.value == null) {
       System.err.println("Chimenea cerrada en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym);
+      return;
     } else {
       System.err.println("Chimenea cerrada en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym + ", valor: " + cur_token.value);
       System.out.println("Buscando otra entrada...");
+      return;
     }    
   } 
+
   // este llama a report_fatal_error("Couldn't repair and continue parse", null); // creo que se puede hacer override de report_fatal_error.
   public void unrecovered_syntax_error(Symbol cur_token) throws java.lang.Exception {
-    throw new Exception("No se han entregado regalos en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym + ", valor: " + cur_token.value);
+    if (cur_token.value == null) {
+       throw new Exception("No se han entregado regalos en esta casa... " );
+    } else {
+      throw new Exception("Chimenea cerrada en linea " + cur_token.left + ", columna " + cur_token.right + ": " + cur_token.sym + ", valor: " + cur_token.value);
+    }
+   
   }
 
 
