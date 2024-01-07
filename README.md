@@ -68,8 +68,8 @@ El proyecto CompiladorNavideño está organizado de la siguiente manera:
 
 ## 📚 Documentación
 
-- [Manual de Usuario](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/EfrZ9TDNVWZEoYgB_CFyBZUBpNYCSIv7tlmb4lqqqxJy5w?e=SgWaTk)
-- [Manual Técnico](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/ESx-10rDiJpIvjpgLJcLQN4BNZPN5n5n7VVG9ZPT7pScbg?e=UmSGwh)
+- [Manual de Usuario](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/Eb5eaQ1Oy9RLlm8N0fktvdgBw1RJrBDFJ0aK73RILSbe_Q?e=3rJ6tV)
+- [Manual Técnico](https://estudianteccr-my.sharepoint.com/:w:/g/personal/2021075241_estudiantec_cr/EVdIKGwQ_GhPp_MyLSRtYxkBZb1JsTckwM04d12CW-Mi3g?e=ECd10u)
 
 ## 📌 Referencias y Recursos Adicionales
 
