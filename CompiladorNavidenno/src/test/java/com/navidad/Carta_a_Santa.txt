@@ -1,86 +1,76 @@
+ /_ esto es un comentario inicial _/
 
-function main () {
- /_ pruebas
- del 
- brete 
-  _/
-    @ASIGNACIONES
+function float func1(char x22,char x22){
+	local char x22 <= '!'| 
+	local char miChar<='!'|
+	local char miChar2<='!'| 
+	local string str1<="Hola $%&/#$&) mundo"|
+	local float fl1|
+	local float fl1<=56.6*true|
+	local int in1<= false|
+	local char camilo[lit] <= {'a','b'}| 
+	camilo[lit] <= 'c'|
+	local bool mibool <= true|
 
-    a <= 1|  
-    local int a <= 1|
-    local int a|
-    @ se deberia caer con eso xd
-    
-    A^1|
-    local int camilo|
-    local int a[4] <= {1,2,3,4}|
-    a[4] <= {1,2,3,4}|
+	local int in1<= --fl1 ~ -14/++in1+7- 15 **  camilo[67]/camilo[lit] * func1 (hola, true, "hola mundo", 4.5, 'a') | 
+	mibool <= (3.7 * fl1 + (-45.6~76)) < 56 ^ true # mibool # !mibool  | 
 
-  @LITERAL
-    1 |
-    "hola"|
-    "c"|
-    1.0|
-    0.2|
-    0.0|
-    100.0|
-    -1|
-    true|
-    false|
-    'c'|
+	return -5.6|
 
-    @break
-    break| 
- 
-    @return
-    return a|
+} 
 
-    @for
-    for(a <= 0| a < 10| ++a){
+function float miFunc(int dif,char otra,char otra2){	
+	for(i <= 10|i<30*2|++i)
+	{
+		do{
+			var <= var - 1| 
+			return 1|
+		}until(var2>12.2 # (34+33)>12)| 
 
-    }|
-
-    @do_until
-    do {
-        a[4] <= {-1,-2,-3,-4}|
-        a[0] <= ++a[0]|
-    } until (a)|
-
-    @IF_JUANITO_ESCARCHA
-
-    if (a>b){ @ si a es mayor a b
-        if (a>b){ @ si a es mayor a b
-            for(a <= 0  | a < 10 | ++a  ){  }|
-        } @ Al final de un if, elif o else no se necesita el simbolo | 
-        else { @ En caso que b sea mayor o igual con a, se entra al else
-       
-            if (a === b  ){}
-            elif (a !== b ){
-                
-                if (a ==> b  ){}
-                elif(a ==< b  ){}
-                elif(!a # b ^ c  ){}
-                else{
-                    print()| @ Esta es la funcion del sistema para imprimir
-                    print(a[0],"me gustas", true)| @ Acepta los argumentos separados por ,
-                    read()| @ Esto es para leer enteros y flotantes
-                }|
-
-            }|
-
-        }|
-    }|
-
+		if (var===0)
+		{
+			print("entra al if")|
+			break|
+		}
+		elif(true)
+		{
+			print(var)|
+		}
+		else
+		{
+			for(j <= 10|j<30*2|++j){
+				for(k <= 10|k<30*2|++k){
+					return 1+3|
+				}|
+			}|
+		}|
+		if (var===0){
+			break|
+		} elif(true) {
+			print(var)|
+		}|
+	}|
+	return 1| 
 }
 
-function int buscar(int princesas, char nombre){
-    local int myVar| @ Declarar una variable de tipo int
-    myVar <= 5| @ Asignar un valor a la variable
-    local int var2 <= 420 | @Declarar una variable y asignarle un valor a la vez
-
-    return 1| @ Retorno de la función 
+function string func3(string b1){
+	return b1| 
 }
 
+function  main(){ 
 
+	
+
+	local bool b1| @marioneta
+	local string s1| 
+	read(s1)| 
+	print(b1)| 
+	print(true)| 
+	print(-6.7)|
+	miFunc(miFunc(),'a')| 
+	local bool bl0 <= 6.7 !== 8.9| 
+	local bool bl1 <= in1 => fl1 ^ false # !(func2(3,in1) > 56)|
+	return bl1| 
+}
 
 

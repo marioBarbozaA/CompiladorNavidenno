@@ -423,7 +423,7 @@ public class Lexer implements java_cup.runtime.Scanner {
         }
         return tokens;
     }*/
-    
+
     public List<Symbol> getTokens() {
     List<Symbol> tokens = new ArrayList<Symbol>();
     Symbol token;
@@ -438,13 +438,13 @@ public class Lexer implements java_cup.runtime.Scanner {
             if (token.sym == sym.MEDIAS_ERROR) {
                 Symbol error = symbol(token.sym, token.value);
                 System.err.println(sym.terminalNames[error.sym] + " " + error.value + " en la línea " + error.left + " y columna " + error.right);
-            } else {
-                tokens.add(symbol(token.sym, token.value));
-            }
+            } 
+            
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
             break;
         }
+        tokens.add(symbol(token.sym, token.value));
     }
 
     return tokens;

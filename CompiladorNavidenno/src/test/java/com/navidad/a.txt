@@ -1,0 +1,86 @@
+
+function main () {
+ /_ pruebas
+ del 
+ brete 
+  _/
+    @ASIGNACIONES
+
+    a <= 1|  
+    local int a <= 1|
+    local int a|
+    @ se deberia caer con eso xd
+    
+    A^1|
+    local int camilo|
+    local int a[4] <= {1,2,3,4}|
+    a[4] <= {1,2,3,4}|
+
+  @LITERAL
+    1 |
+    "hola"|
+    "c"|
+    1.0|
+    0.2|
+    0.0|
+    100.0|
+    -1|
+    true|
+    false|
+    'c'|
+
+    @break
+    break| 
+ 
+    @return
+    return a|
+
+    @for
+    for(a <= 0| a < 10| ++a){
+
+    }|
+
+    @do_until
+    do {
+        a[4] <= {-1,-2,-3,-4}|
+        a[0] <= ++a[0]|
+    } until (a)|
+
+    @IF_JUANITO_ESCARCHA
+
+    if (a>b){ @ si a es mayor a b
+        if (a>b){ @ si a es mayor a b
+            for(a <= 0  | a < 10 | ++a  ){  }|
+        } @ Al final de un if, elif o else no se necesita el simbolo | 
+        else { @ En caso que b sea mayor o igual con a, se entra al else
+       
+            if (a === b  ){}
+            elif (a !== b ){
+                
+                if (a ==> b  ){}
+                elif(a ==< b  ){}
+                elif(!a # b ^ c  ){}
+                else{
+                    print()| @ Esta es la funcion del sistema para imprimir
+                    print(a[0],"me gustas", true)| @ Acepta los argumentos separados por ,
+                    read()| @ Esto es para leer enteros y flotantes
+                }|
+
+            }|
+
+        }|
+    }|
+
+}
+
+function int buscar(int princesas, char nombre){
+    local int myVar| @ Declarar una variable de tipo int
+    myVar <= 5| @ Asignar un valor a la variable
+    local int var2 <= 420 | @Declarar una variable y asignarle un valor a la vez
+
+    return 1| @ Retorno de la función 
+}
+
+
+
+
