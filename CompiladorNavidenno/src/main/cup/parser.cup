@@ -19,6 +19,27 @@ action code {:
 
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
     String currentHash = "";
+    FabricarFuncion ultimaFuncion = null;
+    HashMap<String, FabricarFuncion> fabricarFuncionMap = new HashMap<String, FabricarFuncion>();
+
+    public void agregarFuncion(FabricarFuncion funcion) {
+        fabricarFuncionMap.put(funcion.getNombre(), funcion);
+        for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
+            System.out.println("Key: " + entry.getKey());
+            System.out.println("Value: " + entry.getValue());
+          }
+        ultimaFuncion = funcion; 
+    }
+
+    public FabricarFuncion buscarFuncion(String nombreFuncion) {
+        System.out.println(fabricarFuncionMap.get(nombreFuncion));
+        return fabricarFuncionMap.get(nombreFuncion);
+    }
+
+
+    public FabricarFuncion funcionActual() {
+        return ultimaFuncion;
+    }
 
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
@@ -99,6 +120,8 @@ parser code {:
   // https://www2.cs.tum.edu/projects/cup/docs.php#errors:~:text=4.%20Customizing%20the%20Parser
 
   Lexer lex;
+  StringBuilder dataSegment = new StringBuilder();
+  StringBuilder mainSegment = new StringBuilder();
 
   public parser(Lexer lex) {
     this.lex = lex;
@@ -270,6 +293,12 @@ NAVIDAD::= FUNCIONES_BOLSA_NAVIDENNA
         hola();
         exportarTablaSimbolosHTML();
         imprimirTablasSimbolos();
+        
+        if (buscarFuncion("main") == null) {
+          System.err.println("No se ha encontrado la funcion main");
+        } 
+
+
         adios();
         :};
 
@@ -304,14 +333,27 @@ l_COPO::= L_COLACHO_INT:lit
 
 ARG_COPO::= EXPRESION_BOTA | ARG_COPO SEPARADOR_BASTON EXPRESION_BOTA;
 
-FUNCIONES_BOLSA_NAVIDENNA::= FUNCION_REGALO | FUNCIONES_BOLSA_NAVIDENNA FUNCION_REGALO;
+FUNCIONES_BOLSA_NAVIDENNA::= 
+        FUNCION_REGALO 
+        {:
+        
+        :}
+        | 
+        FUNCIONES_BOLSA_NAVIDENNA FUNCION_REGALO;
 
 FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA | error DEF_JUGUETE CODIGO_ENVOLTURA ; // function int myFuncion (){return 1}
  
 DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO  // FUNCTION MAIN ()   
               {:
-              cambiarContexto("main");
-              annadirSymbol(new SymbolObject("function","int","main"));
+              if (buscarFuncion("main") != null) {
+                System.err.println("Ya existe una funcion main");
+              }
+              else{
+                cambiarContexto("main");
+                annadirSymbol(new SymbolObject("function","int","main"));
+                agregarFuncion(new FabricarFuncion("main", tipoPrimario.INT, true, new tipoPrimario[] {}));
+              }
+              
               :}
               |FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO  // function int myFuncion ()
               {:

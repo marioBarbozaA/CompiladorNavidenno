@@ -612,6 +612,8 @@ public class parser extends java_cup.runtime.lr_parser {
   // https://www2.cs.tum.edu/projects/cup/docs.php#errors:~:text=4.%20Customizing%20the%20Parser
 
   Lexer lex;
+  StringBuilder dataSegment = new StringBuilder();
+  StringBuilder mainSegment = new StringBuilder();
 
   public parser(Lexer lex) {
     this.lex = lex;
@@ -666,6 +668,27 @@ class CUP$parser$actions {
 
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
     String currentHash = "";
+    FabricarFuncion ultimaFuncion = null;
+    HashMap<String, FabricarFuncion> fabricarFuncionMap = new HashMap<String, FabricarFuncion>();
+
+    public void agregarFuncion(FabricarFuncion funcion) {
+        fabricarFuncionMap.put(funcion.getNombre(), funcion);
+        for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
+            System.out.println("Key: " + entry.getKey());
+            System.out.println("Value: " + entry.getValue());
+          }
+        ultimaFuncion = funcion; 
+    }
+
+    public FabricarFuncion buscarFuncion(String nombreFuncion) {
+        System.out.println(fabricarFuncionMap.get(nombreFuncion));
+        return fabricarFuncionMap.get(nombreFuncion);
+    }
+
+
+    public FabricarFuncion funcionActual() {
+        return ultimaFuncion;
+    }
 
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
@@ -783,6 +806,12 @@ public void exportarTablaSimbolosHTML() {
         hola();
         exportarTablaSimbolosHTML();
         imprimirTablasSimbolos();
+        
+        if (buscarFuncion("main") == null) {
+          System.err.println("No se ha encontrado la funcion main");
+        } 
+
+
         adios();
         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NAVIDAD",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -967,7 +996,9 @@ public void exportarTablaSimbolosHTML() {
           case 17: // FUNCIONES_BOLSA_NAVIDENNA ::= FUNCION_REGALO 
             {
               Object RESULT =null;
-
+		
+        
+        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("FUNCIONES_BOLSA_NAVIDENNA",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1007,8 +1038,15 @@ public void exportarTablaSimbolosHTML() {
 		int Funright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Object Fun = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
-              cambiarContexto("main");
-              annadirSymbol(new SymbolObject("function","int","main"));
+              if (buscarFuncion("main") != null) {
+                System.err.println("Ya existe una funcion main");
+              }
+              else{
+                cambiarContexto("main");
+                annadirSymbol(new SymbolObject("function","int","main"));
+                agregarFuncion(new FabricarFuncion("main", tipoPrimario.INT, true, new tipoPrimario[] {}));
+              }
+              
               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("DEF_JUGUETE",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
