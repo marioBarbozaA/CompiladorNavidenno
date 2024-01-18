@@ -41,6 +41,20 @@ action code {:
         return ultimaFuncion;
     }
 
+
+    public FabricarExpresion getTipo(String nombre, boolean esError) {
+        for (SymbolObject value : listaTablasSimbolos.get(currentHash)) {
+            if (value.getID().equals(nombre)) {
+                return new FabricarExpresion(value.getID(), HerramientasFabrica.clasificarTipo(value.getTipo()));
+            }
+        }
+        if (esError){
+          errorNavideno("Variable no declarada: " + nombre);
+        }
+        return FabricarExpresion.NULL;
+    }
+
+
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
         System.out.println("Tabla de simbolos: " + key);
@@ -477,10 +491,45 @@ ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
                     | ELEMENTO_ARRAY_DULCE:elem_array ENTREGA l_ARRAY_TAMAL; // a[4] <= {1,2,3,4}
  
 
-EXPRESION_BOTA::= l_COPO | PERSONA |
-                  ELEMENTO_ARRAY_DULCE | ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO | 
-                  CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_REGALOPRIN | EXPRESION_REL_REGALO_COMPRADO 
-                  | EXPRESION_LOG_REGALO_MANUAL;
+EXPRESION_BOTA::= l_COPO:lit
+                  {:
+                    RESULT = lit
+                  :}
+                  | PERSONA:id 
+                  {:
+                    if(getTipo(id.toString(), true) != tipoPrimario.NULL){
+                      RESULT = new FabricarExpresion(id.toString(), getTipo(id.toString(), true), "PROBANDO");
+                    }
+                    else{
+                      RESULT = new FabricarExpresion("null", tipoPrimario.NULL);
+                    }
+                  :}
+                  | ELEMENTO_ARRAY_DULCE:elemento
+                  {:
+                    RESULT = elemento;
+                  :}
+                  | ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO 
+                  {:
+                    RESULT = expr;
+                  :}
+
+                  | CALL_FUNCTION_FANTASMA_FUTURO 
+                  {:
+
+                  :}
+                  | EXPRESION_ARIT_REGALOPRIN:expresion_aritmetica
+                  {:
+                    RESULT = expresion_aritmetica;
+                  :}
+                  | EXPRESION_REL_REGALO_COMPRADO:expresion_relacional
+                  {:
+                    RESULT = expresion_relacional;  
+                  :} 
+
+                  | EXPRESION_LOG_REGALO_MANUAL:expresion_logica
+                  {:
+                    RESULT = expresion_logica;
+                    :};
 
 ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0]
                     {:
@@ -491,16 +540,17 @@ l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
 
 ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREMENT ELEMENTO_ARRAY_DULCE;
 
-EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA RODOLFO_SUM EXPRESION_BOTA | // a + b
-                        EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA | // a - b
-                        EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA | // a // b
-                        EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA | // a / b
-                        EXPRESION_BOTA SALTARIN_ELEVATE EXPRESION_BOTA | // a ** b
-                        EXPRESION_BOTA COMETA_PRODUCT EXPRESION_BOTA | // a * b
-                        EXPRESION_BOTA CUPIDO_MODULE EXPRESION_BOTA | // a ~ b
-                        GRINCH_DECREMENT PERSONA| //--a
-                        QUIEN_INCREMENT PERSONA|//++a
-                        ARRAY_OPERATION_CASCABEL; // ++a[0]
+EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA RODOLFO_SUM EXPRESION_BOTA 
+                        
+                        | EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA 
+                        | EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA 
+                        | EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA 
+                        | EXPRESION_BOTA SALTARIN_ELEVATE EXPRESION_BOTA 
+                        | EXPRESION_BOTA COMETA_PRODUCT EXPRESION_BOTA 
+                        | EXPRESION_BOTA CUPIDO_MODULE EXPRESION_BOTA 
+                        | GRINCH_DECREMENT PERSONA
+                        | QUIEN_INCREMENT PERSONA
+                        | ARRAY_OPERATION_CASCABEL; // ++a[0]
 
 EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA | // a > b
                         EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA | // a < b
