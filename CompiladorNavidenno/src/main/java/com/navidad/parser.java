@@ -1212,7 +1212,20 @@ public void exportarTablaSimbolosHTML() {
           case 31: // RETORNO_BURRITO_SABANERO ::= ENVIA_RETURN EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object expr = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                            tipoPrimario tipo = ((FabricarExpresion)expr).getTipado();
+                            tipoPrimario retorno = funcionActual().getTipado(); 
+                            if (retorno != tipo){
+                              errorNavideno("El tipo de retorno no coincide con el tipo de la funcion en la linea");
+                            }
+                            else{
+                              funcionActual().setRetorna(true);
+                              agregarFuncion(funcionActual());
+                            }
+                            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("RETORNO_BURRITO_SABANERO",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1221,7 +1234,9 @@ public void exportarTablaSimbolosHTML() {
           case 32: // RETORNO_BURRITO_SABANERO ::= ENVIA_RETURN 
             {
               Object RESULT =null;
+		
 
+                            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("RETORNO_BURRITO_SABANERO",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

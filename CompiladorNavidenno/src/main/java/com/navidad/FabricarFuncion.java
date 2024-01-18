@@ -21,7 +21,7 @@ public class FabricarFuncion {
         return tipado;
     }
 
-    public boolean isRetorna() {
+    public boolean getRetorna() {
         return retorna;
     }
 

@@ -409,7 +409,23 @@ PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id
 
 CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO | ABRE_REGALO error CIERRA_REGALO ;//{CODIGO}
 
-RETORNO_BURRITO_SABANERO::= ENVIA_RETURN EXPRESION_BOTA | ENVIA_RETURN; // return 1| return;
+RETORNO_BURRITO_SABANERO::= ENVIA_RETURN EXPRESION_BOTA:expr
+                            {:
+                            tipoPrimario tipo = ((FabricarExpresion)expr).getTipado();
+                            tipoPrimario retorno = funcionActual().getTipado(); 
+                            if (retorno != tipo){
+                              errorNavideno("El tipo de retorno no coincide con el tipo de la funcion en la linea");
+                            }
+                            else{
+                              funcionActual().setRetorna(true);
+                              agregarFuncion(funcionActual());
+                            }
+                            :}
+                            | 
+                            ENVIA_RETURN
+                            {:
+
+                            :}; // return 1| return;
 
 LINEA_LAZO::= ASIGNACION_GORRO FIN_REGALO |  EXPRESION_BOTA FIN_REGALO | //a <= 1| |
               CORTA_BREAK FIN_REGALO | RETORNO_BURRITO_SABANERO FIN_REGALO | 
@@ -463,7 +479,8 @@ ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
 
 EXPRESION_BOTA::= l_COPO | PERSONA |
                   ELEMENTO_ARRAY_DULCE | ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO | 
-                  CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_REGALOPRIN | EXPRESION_REL_REGALO_COMPRADO | EXPRESION_LOG_REGALO_MANUAL;
+                  CALL_FUNCTION_FANTASMA_FUTURO | EXPRESION_ARIT_REGALOPRIN | EXPRESION_REL_REGALO_COMPRADO 
+                  | EXPRESION_LOG_REGALO_MANUAL;
 
 ELEMENTO_ARRAY_DULCE::= PERSONA:id ABRE_EMPAQUE EXPRESION_BOTA CIERRA_EMPAQUE // a[0]
                     {:

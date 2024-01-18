@@ -3,7 +3,8 @@ function main(){
 }
 
 function int camilo(int camilo){
-
+    local int alison|
+    return alison|
 }
 
 function float mario(float mar, char arielita){
