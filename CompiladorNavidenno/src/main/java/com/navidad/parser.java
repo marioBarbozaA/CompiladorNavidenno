@@ -665,7 +665,10 @@ class CUP$parser$actions {
   public void adios() {
     System.out.println("Adios\n");
   }
-
+  
+  public void errorNavideno(String mensaje){
+    System.err.println("Santa te ha traido un carbon semantico: "+mensaje);
+  }
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
     String currentHash = "";
     FabricarFuncion ultimaFuncion = null;
@@ -674,14 +677,11 @@ class CUP$parser$actions {
     public void agregarFuncion(FabricarFuncion funcion) {
         fabricarFuncionMap.put(funcion.getNombre(), funcion);
         for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey());
-            System.out.println("Value: " + entry.getValue());
           }
         ultimaFuncion = funcion; 
     }
 
     public FabricarFuncion buscarFuncion(String nombreFuncion) {
-        System.out.println(fabricarFuncionMap.get(nombreFuncion));
         return fabricarFuncionMap.get(nombreFuncion);
     }
 
@@ -1039,10 +1039,11 @@ public void exportarTablaSimbolosHTML() {
 		Object Fun = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
               if (buscarFuncion("main") != null) {
-                System.err.println("Ya existe una funcion main");
+                errorNavideno("Ya existe una funcion main");
               }
               else{
                 cambiarContexto("main");
+                RESULT = "main";
                 annadirSymbol(new SymbolObject("function","int","main"));
                 agregarFuncion(new FabricarFuncion("main", tipoPrimario.INT, true, new tipoPrimario[] {}));
               }
@@ -1066,8 +1067,21 @@ public void exportarTablaSimbolosHTML() {
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
-              cambiarContexto(id.toString());
-              annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                String tipoEvaluado = Tipo.toString();
+                if (tipoEvaluado!="char" && tipoEvaluado!="int" && tipoEvaluado!="float" && tipoEvaluado!="bool") {
+                  errorNavideno("Tipo no válido: " + tipoEvaluado);
+                } else {
+
+                    if (buscarFuncion(id.toString()) != null) {
+                        errorNavideno("Ya existe una funcion con el nombre: " + id.toString());
+                    } else {
+                        cambiarContexto(id.toString());
+                        RESULT = id.toString();
+                        annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                        agregarFuncion(new FabricarFuncion(id.toString(), HerramientasFabrica.clasificarTipo(Tipo.toString()), false, new tipoPrimario[] {}));
+                    }
+                }
+
               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("DEF_JUGUETE",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1087,6 +1101,20 @@ public void exportarTablaSimbolosHTML() {
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
+                String tipoEvaluado = Tipo.toString();
+                if (tipoEvaluado!="char" && tipoEvaluado!="int" && tipoEvaluado!="float" && tipoEvaluado!="bool") {
+                  errorNavideno("Tipo no válido: " + tipoEvaluado);
+                } else {
+
+                    if (buscarFuncion(id.toString()) != null) {
+                        errorNavideno("Ya existe una funcion con el nombre: " + id.toString());
+                    } else {
+                        cambiarContexto(id.toString());
+                        RESULT = id.toString();
+                        annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                        agregarFuncion(new FabricarFuncion(id.toString(), HerramientasFabrica.clasificarTipo(Tipo.toString()), false, new tipoPrimario[] {}));
+                    }
+                }
               cambiarContexto(id.toString());
               annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
               
@@ -1144,6 +1172,10 @@ public void exportarTablaSimbolosHTML() {
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                 annadirSymbol(new SymbolObject("param",tipo.toString(), id.toString()));
+                // 
+                funcionActual().agregarTipoParametro(HerramientasFabrica.clasificarTipo(tipo.toString()));
+                agregarFuncion(funcionActual());
+                
                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("PARAMETRO_PALETA",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

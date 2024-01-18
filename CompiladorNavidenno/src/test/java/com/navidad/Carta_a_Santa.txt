@@ -1,7 +1,19 @@
 function main(){
 
 }
-function main(){
-	
+
+function int camilo(int camilo){
+
 }
 
+function float mario(float mar, char arielita){
+
+}
+
+function bool marioneta(bool marito){
+
+}
+
+function char rosas(){
+
+}

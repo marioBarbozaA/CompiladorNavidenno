@@ -8,5 +8,5 @@ enum tipoPrimario {
     CHAR,
     CHAR_ARR,
     INT_ARR,
-    VOID
+    NULL
 }

@@ -44,14 +44,14 @@ public class FabricarExpresion {
      * Convierte el tipo de la expresión a su versión de arreglo, si es posible.
      */
     public void convertirTipadoAArreglo() {
-        this.tipado = HerramientasFabrica.toArr(this.tipado);
+        this.tipado = HerramientasFabrica.tiparArray(this.tipado);
     }
 
     /**
      * Convierte el tipo de la expresión de arreglo a su tipo básico, si es posible.
      */
     public void convertirArregloATipo() {
-        this.tipado = HerramientasFabrica.fromArr(this.tipado);
+        this.tipado = HerramientasFabrica.destiparArray(this.tipado);
     }
 
     @Override

@@ -16,7 +16,10 @@ action code {:
   public void adios() {
     System.out.println("Adios\n");
   }
-
+  
+  public void errorNavideno(String mensaje){
+    System.err.println("Santa te ha traido un carbon semantico: "+mensaje);
+  }
     HashMap<String, ArrayList<SymbolObject>> listaTablasSimbolos = new HashMap<String, ArrayList<SymbolObject>>();
     String currentHash = "";
     FabricarFuncion ultimaFuncion = null;
@@ -25,14 +28,11 @@ action code {:
     public void agregarFuncion(FabricarFuncion funcion) {
         fabricarFuncionMap.put(funcion.getNombre(), funcion);
         for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey());
-            System.out.println("Value: " + entry.getValue());
           }
         ultimaFuncion = funcion; 
     }
 
     public FabricarFuncion buscarFuncion(String nombreFuncion) {
-        System.out.println(fabricarFuncionMap.get(nombreFuncion));
         return fabricarFuncionMap.get(nombreFuncion);
     }
 
@@ -346,22 +346,52 @@ FUNCION_REGALO::= DEF_JUGUETE CODIGO_ENVOLTURA | error DEF_JUGUETE CODIGO_ENVOLT
 DEF_JUGUETE::= FUNCTION_VILLANCICOS:Fun ESTRELLA_MAIN ABRE_CUENTO CIERRE_CUENTO  // FUNCTION MAIN ()   
               {:
               if (buscarFuncion("main") != null) {
-                System.err.println("Ya existe una funcion main");
+                errorNavideno("Ya existe una funcion main");
               }
               else{
                 cambiarContexto("main");
+                RESULT = "main";
                 annadirSymbol(new SymbolObject("function","int","main"));
                 agregarFuncion(new FabricarFuncion("main", tipoPrimario.INT, true, new tipoPrimario[] {}));
               }
               
               :}
+
               |FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO CIERRE_CUENTO  // function int myFuncion ()
+              
               {:
-              cambiarContexto(id.toString());
-              annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                String tipoEvaluado = Tipo.toString();
+                if (tipoEvaluado!="char" && tipoEvaluado!="int" && tipoEvaluado!="float" && tipoEvaluado!="bool") {
+                  errorNavideno("Tipo no válido: " + tipoEvaluado);
+                } else {
+
+                    if (buscarFuncion(id.toString()) != null) {
+                        errorNavideno("Ya existe una funcion con el nombre: " + id.toString());
+                    } else {
+                        cambiarContexto(id.toString());
+                        RESULT = id.toString();
+                        annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                        agregarFuncion(new FabricarFuncion(id.toString(), HerramientasFabrica.clasificarTipo(Tipo.toString()), false, new tipoPrimario[] {}));
+                    }
+                }
+
               :}
               |FUNCTION_VILLANCICOS:Fun T_COPO:Tipo PERSONA:id ABRE_CUENTO
               {:
+                String tipoEvaluado = Tipo.toString();
+                if (tipoEvaluado!="char" && tipoEvaluado!="int" && tipoEvaluado!="float" && tipoEvaluado!="bool") {
+                  errorNavideno("Tipo no válido: " + tipoEvaluado);
+                } else {
+
+                    if (buscarFuncion(id.toString()) != null) {
+                        errorNavideno("Ya existe una funcion con el nombre: " + id.toString());
+                    } else {
+                        cambiarContexto(id.toString());
+                        RESULT = id.toString();
+                        annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
+                        agregarFuncion(new FabricarFuncion(id.toString(), HerramientasFabrica.clasificarTipo(Tipo.toString()), false, new tipoPrimario[] {}));
+                    }
+                }
               cambiarContexto(id.toString());
               annadirSymbol(new SymbolObject("function",Tipo.toString(), id.toString()));
               :} PARAMETROS_PALETAS CIERRE_CUENTO ; // function int myFuncion (int a, int b)
@@ -371,6 +401,10 @@ PARAMETROS_PALETAS::= PARAMETRO_PALETA | PARAMETROS_PALETAS SEPARADOR_BASTON PAR
 PARAMETRO_PALETA::= T_COPO:tipo PERSONA:id 
                 {:
                 annadirSymbol(new SymbolObject("param",tipo.toString(), id.toString()));
+                // 
+                funcionActual().agregarTipoParametro(HerramientasFabrica.clasificarTipo(tipo.toString()));
+                agregarFuncion(funcionActual());
+                
                 :};
 
 CODIGO_ENVOLTURA::= ABRE_REGALO LINEAS_LAZOS CIERRA_REGALO | ABRE_REGALO CIERRA_REGALO | ABRE_REGALO error CIERRA_REGALO ;//{CODIGO}

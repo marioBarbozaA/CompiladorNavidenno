@@ -28,15 +28,15 @@ public class HerramientasFabrica {
         tipoFromStringMap.put("int[]", tipoPrimario.INT_ARR);
     }
 
-    public static tipoPrimario toArr(tipoPrimario tipo) {
-        return toArrMap.getOrDefault(tipo, tipoPrimario.VOID);
+    public static tipoPrimario tiparArray(tipoPrimario tipo) {
+        return toArrMap.getOrDefault(tipo, tipoPrimario.NULL);
     }
 
-    public static tipoPrimario fromArr(tipoPrimario tipo){
-        return fromArrMap.getOrDefault(tipo, tipoPrimario.VOID);
+    public static tipoPrimario destiparArray(tipoPrimario tipo){
+        return fromArrMap.getOrDefault(tipo, tipoPrimario.NULL);
     }
 
-    public static tipoPrimario tipoFromString(String tipo) {
-        return tipoFromStringMap.getOrDefault(tipo, tipoPrimario.VOID);
+    public static tipoPrimario clasificarTipo(String tipo) {
+        return tipoFromStringMap.getOrDefault(tipo, tipoPrimario.NULL);
     }
 }

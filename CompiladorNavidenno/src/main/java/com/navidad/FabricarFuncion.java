@@ -30,7 +30,7 @@ public class FabricarFuncion {
     }
 
 
-    public void addTipoParametro(tipoPrimario tipo) {
+    public void agregarTipoParametro(tipoPrimario tipo) {
         tipoPrimario[] newTiposParametros = new tipoPrimario[tiposParametros.length + 1];
         for (int i = 0; i < tiposParametros.length; i++) {
             newTiposParametros[i] = tiposParametros[i];
