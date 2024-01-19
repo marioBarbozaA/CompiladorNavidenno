@@ -10,6 +10,31 @@ import java.util.List;
 
 /* Clase principal del compilador */
 action code {:
+  //Aritmeticos
+  public String S_SUMA = " + ";
+  public String S_RESTA = " - ";
+  public String S_MULTIPLICACION = " * ";
+  public String S_POWER = " ** ";
+  public String S_DIVISION_INT = " / ";
+  public String S_DIVISION_FLOAT = " // ";
+  public String S_MODULO = " ~ ";
+  public String S_INCREMENTAR = " ++ ";
+  public String S_DECREMENTAR = " -- ";
+
+  // Logicos
+
+  public String S_DISJUNCION = " # ";
+  public String S_CONJUNCION = " ^ ";
+  public String S_NEGACION = " ! ";
+
+  // Relacionales
+  public String S_MAYOR_QUE = " > ";
+  public String S_MENOR_QUE = " < ";
+  public String S_MAYOR_IGUAL_QUE = " ==> ";
+  public String S_MENOR_IGUAL_QUE = " ==< ";
+  public String S_IGUAL_QUE = " === ";
+  public String S_DIFERENTE_QUE = " !== ";
+
   public void hola() {
     System.out.println("Hola");
   }
@@ -54,6 +79,14 @@ action code {:
         return FabricarExpresion.NULL;
     }
 
+    public TipoExpresion validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<TipoExpresion> tiposPermitidos) {
+    if (tiposPermitidos.contains(expr1.getTipo()) && tiposPermitidos.contains(expr2.getTipo())) {
+        return expr1.getTipo();
+    } else {
+      errorNavideno("Tipos no compatibles en la operacion: " + operacion);
+        return TipoExpresion.NULL;
+    }
+}
 
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
@@ -540,8 +573,14 @@ l_ARRAY_TAMAL::= ABRE_REGALO ARG_COPO CIERRA_REGALO;
 
 ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREMENT ELEMENTO_ARRAY_DULCE;
 
-EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA RODOLFO_SUM EXPRESION_BOTA 
-                        
+EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m 
+                        {:
+                          FabricarExpresion expresionN = (FabricarExpresion)n;
+                          FabricarExpresion expresionM = (FabricarExpresion)m;
+                          ArrayList arraylist_tipos_validos = new ArrayList<TipoExpresion>(Arrays.asList(TipoExpresion.INT, TipoExpresion.FLOAT));
+                          TipoExpresion tipo_res = validarTipado("+", expresionN, expresionM, arraylist_tipos_validos);
+
+                        :}
                         | EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA 
                         | EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA 
                         | EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA 
