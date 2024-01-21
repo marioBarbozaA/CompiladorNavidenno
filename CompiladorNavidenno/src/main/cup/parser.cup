@@ -10,30 +10,6 @@ import java.util.List;
 
 /* Clase principal del compilador */
 action code {:
-  //Aritmeticos
-  public String S_SUMA = " + ";
-  public String S_RESTA = " - ";
-  public String S_MULTIPLICACION = " * ";
-  public String S_POWER = " ** ";
-  public String S_DIVISION_INT = " / ";
-  public String S_DIVISION_FLOAT = " // ";
-  public String S_MODULO = " ~ ";
-  public String S_INCREMENTAR = " ++ ";
-  public String S_DECREMENTAR = " -- ";
-
-  // Logicos
-
-  public String S_DISJUNCION = " # ";
-  public String S_CONJUNCION = " ^ ";
-  public String S_NEGACION = " ! ";
-
-  // Relacionales
-  public String S_MAYOR_QUE = " > ";
-  public String S_MENOR_QUE = " < ";
-  public String S_MAYOR_IGUAL_QUE = " ==> ";
-  public String S_MENOR_IGUAL_QUE = " ==< ";
-  public String S_IGUAL_QUE = " === ";
-  public String S_DIFERENTE_QUE = " !== ";
 
   public void hola() {
     System.out.println("Hola");
@@ -77,19 +53,19 @@ action code {:
         return FabricarExpresion.NULL;
     }
 
-    public TipoExpresion validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<TipoExpresion> tiposPermitidos) {
+    public tipoPrimario validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<tipoPrimario> tiposPermitidos) {
     if (tiposPermitidos.contains(expr1.getTipo()) && tiposPermitidos.contains(expr2.getTipo())) {
         return expr1.getTipo();
     } else {
       errorNavideno("Tipos no compatibles en la operacion: " + operacion);
-        return TipoExpresion.NULL;
+        return tipoPrimario.NULL;
     }
 }
-    public TipoExpresion validarTipadoParaExpresiones(Object n, Object m, String operacion) {
+    public tipoPrimario validarTipadoParaExpresiones(Object n, Object m, String operacion, ArrayList<tipoPrimario> tiposPermitidos) {
+
         FabricarExpresion expresionN = (FabricarExpresion)n;
         FabricarExpresion expresionM = (FabricarExpresion)m;
-        ArrayList<TipoExpresion> arraylist_tipos_validos = new ArrayList<TipoExpresion>(Arrays.asList(TipoExpresion.INT, TipoExpresion.FLOAT));
-        return validarTipado(operacion, expresionN, expresionM, arraylist_tipos_validos);
+        return validarTipado(operacion, expresionN, expresionM, tiposPermitidos);
     }
     
     public void imprimirTablasSimbolos(){
@@ -579,16 +555,20 @@ ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREM
 
 EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA);
+                          ArrayList<tipoPrimario> tiposPermitidos = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA, tiposPermitidos);
                         :}
                         | EXPRESION_BOTA:n TRUENO_DECREASE EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA);
+                          ArrayList<tipoPrimario> tiposPermitidos = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA, tiposPermitidos);
                         :}
                         | EXPRESION_BOTA:n RELAMPAGO_INT_DIVISION EXPRESION_BOTA:m 
 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT);
+                          
+                          ArrayList<tipoPrimario> tiposPermitidos = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT, tiposPermitidos);
                         :}
 
                         | EXPRESION_BOTA:n RAYO_FLOAT_DIVISION EXPRESION_BOTA:m
@@ -615,7 +595,7 @@ EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m
 
 EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA 
                         {:
-                        
+
                         :}
                         | EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA 
                         | EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA 
