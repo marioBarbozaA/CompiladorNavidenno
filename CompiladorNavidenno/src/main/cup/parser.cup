@@ -52,8 +52,6 @@ action code {:
 
     public void agregarFuncion(FabricarFuncion funcion) {
         fabricarFuncionMap.put(funcion.getNombre(), funcion);
-        for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
-          }
         ultimaFuncion = funcion; 
     }
 
@@ -87,7 +85,13 @@ action code {:
         return TipoExpresion.NULL;
     }
 }
-
+    public TipoExpresion validarTipadoParaExpresiones(Object n, Object m, String operacion) {
+        FabricarExpresion expresionN = (FabricarExpresion)n;
+        FabricarExpresion expresionM = (FabricarExpresion)m;
+        ArrayList<TipoExpresion> arraylist_tipos_validos = new ArrayList<TipoExpresion>(Arrays.asList(TipoExpresion.INT, TipoExpresion.FLOAT));
+        return validarTipado(operacion, expresionN, expresionM, arraylist_tipos_validos);
+    }
+    
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
         System.out.println("Tabla de simbolos: " + key);
@@ -575,28 +579,49 @@ ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREM
 
 EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m 
                         {:
-                          FabricarExpresion expresionN = (FabricarExpresion)n;
-                          FabricarExpresion expresionM = (FabricarExpresion)m;
-                          ArrayList arraylist_tipos_validos = new ArrayList<TipoExpresion>(Arrays.asList(TipoExpresion.INT, TipoExpresion.FLOAT));
-                          TipoExpresion tipo_res = validarTipado("+", expresionN, expresionM, arraylist_tipos_validos);
-
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA);
                         :}
-                        | EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA 
-                        | EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA 
-                        | EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA 
-                        | EXPRESION_BOTA SALTARIN_ELEVATE EXPRESION_BOTA 
-                        | EXPRESION_BOTA COMETA_PRODUCT EXPRESION_BOTA 
-                        | EXPRESION_BOTA CUPIDO_MODULE EXPRESION_BOTA 
+                        | EXPRESION_BOTA:n TRUENO_DECREASE EXPRESION_BOTA:m 
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA);
+                        :}
+                        | EXPRESION_BOTA:n RELAMPAGO_INT_DIVISION EXPRESION_BOTA:m 
+
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT);
+                        :}
+
+                        | EXPRESION_BOTA:n RAYO_FLOAT_DIVISION EXPRESION_BOTA:m
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_FLOAT);
+                        :}
+                        | EXPRESION_BOTA:n SALTARIN_ELEVATE EXPRESION_BOTA:m
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_POWER);
+                        :}
+                        | EXPRESION_BOTA:n COMETA_PRODUCT EXPRESION_BOTA:m 
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MULTIPLICACION);
+                        :}
+                        | EXPRESION_BOTA:n CUPIDO_MODULE EXPRESION_BOTA:m 
+                        {:
+                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MODULO);
+                        :}
                         | GRINCH_DECREMENT PERSONA
+
                         | QUIEN_INCREMENT PERSONA
+
                         | ARRAY_OPERATION_CASCABEL; // ++a[0]
 
-EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA | // a > b
-                        EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA | // a < b
-                        EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA | // a === b
-                        EXPRESION_BOTA ELFO_NOT_EQUAL EXPRESION_BOTA | // a !== b
-                        EXPRESION_BOTA ELFO_GREATER_EQUAL EXPRESION_BOTA | // a >== b
-                        EXPRESION_BOTA ELFO_LESS_EQUAL EXPRESION_BOTA; // a <== b
+EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA 
+                        {:
+                        
+                        :}
+                        | EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA 
+                        | EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA ELFO_NOT_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA ELFO_GREATER_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA ELFO_LESS_EQUAL EXPRESION_BOTA; // a <== b
 
 EXPRESION_LOG_REGALO_MANUAL::= EXPRESION_BOTA REY_MELCHOR_COJUNCTION EXPRESION_BOTA | // a ^ b
                         EXPRESION_BOTA REY_GASPAR_DISJUNCTION EXPRESION_BOTA | // a # b
