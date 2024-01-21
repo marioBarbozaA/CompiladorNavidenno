@@ -1,3 +1,15 @@
 function main(){
+    local int camilo|
+}
 
+function float mario(){
+    local float m|
+    local float n|
+    local int a|
+    return a|
+}
+
+function bool silvia(){
+    local bool b|
+    return b|
 }
