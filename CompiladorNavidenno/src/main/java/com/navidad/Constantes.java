@@ -1,5 +1,8 @@
 package com.navidad;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 enum tipoPrimario {
     INT,
     FLOAT,
@@ -35,4 +38,9 @@ public interface Constantes{
     public static final String S_MENOR_IGUAL_QUE = " ==< ";
     public static final String S_IGUAL_QUE = " === ";
     public static final String S_DIFERENTE_QUE = " !== ";
+    
+    // Constantes de arrays
+    public static final ArrayList<tipoPrimario> ARR_INT_FLOAT = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
+    public static final ArrayList<tipoPrimario> ARR_INT_FLOAT_BOOL = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT , tipoPrimario.BOOL));
+    
 }
