@@ -1,4 +1,5 @@
 package com.navidad;
+
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,21 +42,21 @@ action code {:
     }
 
 
-    public FabricarExpresion getTipo(String nombre, boolean esError) {
+    public tipoPrimario getTipo(String nombre, boolean esError) {
         for (SymbolObject value : listaTablasSimbolos.get(currentHash)) {
             if (value.getID().equals(nombre)) {
-                return new FabricarExpresion(value.getID(), HerramientasFabrica.clasificarTipo(value.getTipo()));
+              return HerramientasFabrica.clasificarTipo(value.getTipo());
             }
         }
         if (esError){
           errorNavideno("Variable no declarada: " + nombre);
         }
-        return FabricarExpresion.NULL;
+        return tipoPrimario.NULL;
     }
 
     public tipoPrimario validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<tipoPrimario> tiposPermitidos) {
-    if (tiposPermitidos.contains(expr1.getTipo()) && tiposPermitidos.contains(expr2.getTipo())) {
-        return expr1.getTipo();
+    if (tiposPermitidos.contains(expr1.getTipado()) && tiposPermitidos.contains(expr2.getTipado())) {
+        return expr1.getTipado();
     } else {
       errorNavideno("Tipos no compatibles en la operacion: " + operacion);
         return tipoPrimario.NULL;
@@ -506,7 +507,7 @@ ASIGNACION_GORRO::= LOCAL_MUERDAGO T_COPO:tipo PERSONA:id    // local int a
 
 EXPRESION_BOTA::= l_COPO:lit
                   {:
-                    RESULT = lit
+                    RESULT = lit;
                   :}
                   | PERSONA:id 
                   {:
@@ -527,9 +528,7 @@ EXPRESION_BOTA::= l_COPO:lit
                   :}
 
                   | CALL_FUNCTION_FANTASMA_FUTURO 
-                  {:
 
-                  :}
                   | EXPRESION_ARIT_REGALOPRIN:expresion_aritmetica
                   {:
                     RESULT = expresion_aritmetica;
@@ -555,33 +554,33 @@ ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREM
 
 EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA, ARR_INT_FLOAT);
                         :}
                         | EXPRESION_BOTA:n TRUENO_DECREASE EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA, ARR_INT_FLOAT);
                         :}
                         | EXPRESION_BOTA:n RELAMPAGO_INT_DIVISION EXPRESION_BOTA:m 
 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT, ARR_INT_FLOAT);
                         :}
 
                         | EXPRESION_BOTA:n RAYO_FLOAT_DIVISION EXPRESION_BOTA:m
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_FLOAT, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_FLOAT, ARR_INT_FLOAT);
                         :}
                         | EXPRESION_BOTA:n SALTARIN_ELEVATE EXPRESION_BOTA:m
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_POWER, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_POWER, ARR_INT_FLOAT);
                         :}
                         | EXPRESION_BOTA:n COMETA_PRODUCT EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MULTIPLICACION, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MULTIPLICACION, ARR_INT_FLOAT);
                         :}
                         | EXPRESION_BOTA:n CUPIDO_MODULE EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MODULO, ARR_INT_FLOAT);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MODULO, ARR_INT_FLOAT);
                         :}
                         | GRINCH_DECREMENT PERSONA
 
@@ -591,30 +590,36 @@ EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m
 
 EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA:n ELFO_GREATER EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR, ARR_INT_FLOAT_BOOL);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_QUE, ARR_INT_FLOAT_BOOL);
                         :}
-                        | EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA 
+                        | EXPRESION_BOTA:n ELFO_LESS EXPRESION_BOTA:m 
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR, ARR_INT_FLOAT_BOOL);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_QUE, ARR_INT_FLOAT_BOOL);
                         :}
-                        | EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA:n ELFO_EQUAL EXPRESION_BOTA:m
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_IGUAL, ARR_INT_FLOAT_BOOL);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
                         :}
 
-                        | EXPRESION_BOTA ELFO_NOT_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA:n ELFO_NOT_EQUAL EXPRESION_BOTA:m
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_DIFERENTE, ARR_INT_FLOAT_BOOL);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIFERENTE_QUE, ARR_INT_FLOAT_BOOL);
                         :}
-                        | EXPRESION_BOTA ELFO_GREATER_EQUAL EXPRESION_BOTA 
+                        | EXPRESION_BOTA:n ELFO_GREATER_EQUAL EXPRESION_BOTA:m
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_IGUAL, ARR_INT_FLOAT_BOOL);
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
                         :}
-                        | EXPRESION_BOTA ELFO_LESS_EQUAL EXPRESION_BOTA; // a <== b
+                        | EXPRESION_BOTA:n ELFO_LESS_EQUAL EXPRESION_BOTA:m // a <== b
                         {:
-                          TipoExpresion tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_IGUAL, ARR_INT_FLOAT_BOOL);
-                        :}
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                        :};
 
-EXPRESION_LOG_REGALO_MANUAL::= EXPRESION_BOTA REY_MELCHOR_COJUNCTION EXPRESION_BOTA 
-                        | EXPRESION_BOTA REY_GASPAR_DISJUNCTION EXPRESION_BOTA 
+EXPRESION_LOG_REGALO_MANUAL::= EXPRESION_BOTA:n REY_MELCHOR_COJUNCTION EXPRESION_BOTA:m 
+                        {:
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_CONJUNCION, ARR_BOOL);
+                        :}
+                        | EXPRESION_BOTA:n REY_GASPAR_DISJUNCTION EXPRESION_BOTA:m
+                        {:
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DISJUNCION, ARR_BOOL);
+                        :}
                         | REY_BALTASAR_NOT EXPRESION_BOTA; // !a  

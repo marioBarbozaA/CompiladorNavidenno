@@ -1,20 +1,3 @@
 function main(){
 
 }
-
-function int camilo(int camilo){
-    local int alison|
-    return alison|
-}
-
-function float mario(float mar, char arielita){
-
-}
-
-function bool marioneta(bool marito){
-
-}
-
-function char rosas(){
-
-}

@@ -659,6 +659,7 @@ public class parser extends java_cup.runtime.lr_parser {
 class CUP$parser$actions {
 
 
+
   public void hola() {
     System.out.println("Hola");
   }
@@ -676,8 +677,6 @@ class CUP$parser$actions {
 
     public void agregarFuncion(FabricarFuncion funcion) {
         fabricarFuncionMap.put(funcion.getNombre(), funcion);
-        for (Map.Entry<String, FabricarFuncion> entry : fabricarFuncionMap.entrySet()) {
-          }
         ultimaFuncion = funcion; 
     }
 
@@ -690,6 +689,34 @@ class CUP$parser$actions {
         return ultimaFuncion;
     }
 
+
+    public tipoPrimario getTipo(String nombre, boolean esError) {
+        for (SymbolObject value : listaTablasSimbolos.get(currentHash)) {
+            if (value.getID().equals(nombre)) {
+              return HerramientasFabrica.clasificarTipo(value.getTipo());
+            }
+        }
+        if (esError){
+          errorNavideno("Variable no declarada: " + nombre);
+        }
+        return tipoPrimario.NULL;
+    }
+
+    public tipoPrimario validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<tipoPrimario> tiposPermitidos) {
+    if (tiposPermitidos.contains(expr1.getTipado()) && tiposPermitidos.contains(expr2.getTipado())) {
+        return expr1.getTipado();
+    } else {
+      errorNavideno("Tipos no compatibles en la operacion: " + operacion);
+        return tipoPrimario.NULL;
+    }
+}
+    public tipoPrimario validarTipadoParaExpresiones(Object n, Object m, String operacion, ArrayList<tipoPrimario> tiposPermitidos) {
+
+        FabricarExpresion expresionN = (FabricarExpresion)n;
+        FabricarExpresion expresionM = (FabricarExpresion)m;
+        return validarTipado(operacion, expresionN, expresionM, tiposPermitidos);
+    }
+    
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
         System.out.println("Tabla de simbolos: " + key);
@@ -1592,7 +1619,12 @@ public void exportarTablaSimbolosHTML() {
           case 66: // EXPRESION_BOTA ::= l_COPO 
             {
               Object RESULT =null;
-
+		int litleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int litright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object lit = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    RESULT = lit;
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1601,7 +1633,17 @@ public void exportarTablaSimbolosHTML() {
           case 67: // EXPRESION_BOTA ::= PERSONA 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    if(getTipo(id.toString(), true) != tipoPrimario.NULL){
+                      RESULT = new FabricarExpresion(id.toString(), getTipo(id.toString(), true), "PROBANDO");
+                    }
+                    else{
+                      RESULT = new FabricarExpresion("null", tipoPrimario.NULL);
+                    }
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1610,7 +1652,12 @@ public void exportarTablaSimbolosHTML() {
           case 68: // EXPRESION_BOTA ::= ELEMENTO_ARRAY_DULCE 
             {
               Object RESULT =null;
-
+		int elementoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int elementoright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object elemento = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    RESULT = elemento;
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1619,7 +1666,12 @@ public void exportarTablaSimbolosHTML() {
           case 69: // EXPRESION_BOTA ::= ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO 
             {
               Object RESULT =null;
-
+		int exprleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int exprright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object expr = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		
+                    RESULT = expr;
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1637,7 +1689,12 @@ public void exportarTablaSimbolosHTML() {
           case 71: // EXPRESION_BOTA ::= EXPRESION_ARIT_REGALOPRIN 
             {
               Object RESULT =null;
-
+		int expresion_aritmeticaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int expresion_aritmeticaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object expresion_aritmetica = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    RESULT = expresion_aritmetica;
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1646,7 +1703,12 @@ public void exportarTablaSimbolosHTML() {
           case 72: // EXPRESION_BOTA ::= EXPRESION_REL_REGALO_COMPRADO 
             {
               Object RESULT =null;
-
+		int expresion_relacionalleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int expresion_relacionalright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object expresion_relacional = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    RESULT = expresion_relacional;  
+                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1655,7 +1717,12 @@ public void exportarTablaSimbolosHTML() {
           case 73: // EXPRESION_BOTA ::= EXPRESION_LOG_REGALO_MANUAL 
             {
               Object RESULT =null;
-
+		int expresion_logicaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int expresion_logicaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object expresion_logica = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                    RESULT = expresion_logica;
+                    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_BOTA",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1705,7 +1772,15 @@ public void exportarTablaSimbolosHTML() {
           case 78: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA RODOLFO_SUM EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1714,7 +1789,15 @@ public void exportarTablaSimbolosHTML() {
           case 79: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA TRUENO_DECREASE EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1723,7 +1806,15 @@ public void exportarTablaSimbolosHTML() {
           case 80: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA RELAMPAGO_INT_DIVISION EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1732,7 +1823,15 @@ public void exportarTablaSimbolosHTML() {
           case 81: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA RAYO_FLOAT_DIVISION EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_FLOAT, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1741,7 +1840,15 @@ public void exportarTablaSimbolosHTML() {
           case 82: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA SALTARIN_ELEVATE EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_POWER, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1750,7 +1857,15 @@ public void exportarTablaSimbolosHTML() {
           case 83: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA COMETA_PRODUCT EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MULTIPLICACION, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1759,7 +1874,15 @@ public void exportarTablaSimbolosHTML() {
           case 84: // EXPRESION_ARIT_REGALOPRIN ::= EXPRESION_BOTA CUPIDO_MODULE EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MODULO, ARR_INT_FLOAT);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_ARIT_REGALOPRIN",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1795,7 +1918,15 @@ public void exportarTablaSimbolosHTML() {
           case 88: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_GREATER EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1804,7 +1935,15 @@ public void exportarTablaSimbolosHTML() {
           case 89: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_LESS EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1813,7 +1952,15 @@ public void exportarTablaSimbolosHTML() {
           case 90: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_EQUAL EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1822,7 +1969,15 @@ public void exportarTablaSimbolosHTML() {
           case 91: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_NOT_EQUAL EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIFERENTE_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1831,7 +1986,15 @@ public void exportarTablaSimbolosHTML() {
           case 92: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_GREATER_EQUAL EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1840,7 +2003,15 @@ public void exportarTablaSimbolosHTML() {
           case 93: // EXPRESION_REL_REGALO_COMPRADO ::= EXPRESION_BOTA ELFO_LESS_EQUAL EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_REL_REGALO_COMPRADO",26, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1849,7 +2020,15 @@ public void exportarTablaSimbolosHTML() {
           case 94: // EXPRESION_LOG_REGALO_MANUAL ::= EXPRESION_BOTA REY_MELCHOR_COJUNCTION EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_CONJUNCION, ARR_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_LOG_REGALO_MANUAL",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1858,7 +2037,15 @@ public void exportarTablaSimbolosHTML() {
           case 95: // EXPRESION_LOG_REGALO_MANUAL ::= EXPRESION_BOTA REY_GASPAR_DISJUNCTION EXPRESION_BOTA 
             {
               Object RESULT =null;
-
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int mleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int mright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object m = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                          tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DISJUNCION, ARR_BOOL);
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION_LOG_REGALO_MANUAL",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
