@@ -5,6 +5,7 @@
 
 package com.navidad;
 
+import static com.navidad.Constantes.*;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.Map;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.List;
-import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */

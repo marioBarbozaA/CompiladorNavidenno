@@ -1,5 +1,6 @@
 package com.navidad;
 
+import static com.navidad.Constantes.*;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.HashMap;

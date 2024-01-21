@@ -42,6 +42,6 @@ public interface Constantes{
     // Constantes de arrays
     public static final ArrayList<tipoPrimario> ARR_INT_FLOAT = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
     public static final ArrayList<tipoPrimario> ARR_INT_FLOAT_BOOL = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT , tipoPrimario.BOOL));
-    public static final ArrayList<tipoPrimario> ARR_INT_FLOAT_BOOL_CHAR = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.BOOL));    
+    public static final ArrayList<tipoPrimario> ARR_BOOL = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.BOOL));    
     
 }
