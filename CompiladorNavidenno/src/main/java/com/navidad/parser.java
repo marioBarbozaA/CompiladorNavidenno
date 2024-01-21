@@ -5,7 +5,6 @@
 
 package com.navidad;
 
-import static com.navidad.Constantes.*;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +12,8 @@ import java.util.Map;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.List;
+import java.util.Arrays;
+import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
@@ -659,6 +660,34 @@ public class parser extends java_cup.runtime.lr_parser {
 class CUP$parser$actions {
 
 
+      //Aritmeticos
+     String S_SUMA = " + ";
+     String S_RESTA = " - ";
+     String S_MULTIPLICACION = " * ";
+     String S_POWER = " ** ";
+     String S_DIVISION_INT = " / ";
+     String S_DIVISION_FLOAT = " // ";
+     String S_MODULO = " ~ ";
+     String S_INCREMENTAR = " ++ ";
+     String S_DECREMENTAR = " -- ";
+
+    // Logicos
+    String S_DISJUNCION = " # ";
+    String S_CONJUNCION = " ^ ";
+    String S_NEGACION = " ! ";
+
+    // Relacionales
+    String S_MAYOR_QUE = " > ";
+    String S_MENOR_QUE = " < ";
+    String S_MAYOR_IGUAL_QUE = " ==> ";
+    String S_MENOR_IGUAL_QUE = " ==< ";
+    String S_IGUAL_QUE = " === ";
+    String S_DIFERENTE_QUE = " !== ";
+    
+    // Constantes de arrays
+    ArrayList<tipoPrimario> ARR_INT_FLOAT = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT));
+    ArrayList<tipoPrimario> ARR_INT_FLOAT_BOOL = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.INT, tipoPrimario.FLOAT , tipoPrimario.BOOL));
+    ArrayList<tipoPrimario> ARR_BOOL = new ArrayList<tipoPrimario>(Arrays.asList(tipoPrimario.BOOL)); 
 
   public void hola() {
     System.out.println("Hola");
