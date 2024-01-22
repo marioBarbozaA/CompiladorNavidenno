@@ -1,25 +1,28 @@
 function main(){
     local int camilo|
 }
+function bool marioneta(){
+    local bool a|
+    local float b|
+    local string z|
+    do {} until (a===a)|
+    do {} until (b===b)|
+    do {} until (b===a)|
+    do {} until (z)|
+    return a|
+}
 
-function float mario(){
-    local float m|
-    local float n|
+function int mario(){
     local int a|
     if (a===a){
 
     }|
-    return m|
+    return a|
 }
 
-function bool silvia(){
-    local bool b|
-    if (b===b){
-
-    }|
-
-    
-
-    
-    return b|
+function int alexa(){
+    local int a|
+    if (a===a){}|
+    else{}
+    return a|
 }

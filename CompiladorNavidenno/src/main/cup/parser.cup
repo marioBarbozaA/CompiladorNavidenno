@@ -85,7 +85,12 @@ action code {:
 
     public tipoPrimario validarTipado(String operacion, FabricarExpresion expr1, FabricarExpresion expr2, ArrayList<tipoPrimario> tiposPermitidos) {
     if (tiposPermitidos.contains(expr1.getTipado()) && tiposPermitidos.contains(expr2.getTipado())) {
-        return expr1.getTipado();
+        if (expr1.getTipado() == expr2.getTipado()) {
+            return expr1.getTipado();
+        } else {
+            errorNavideno("Tipos no compatibles en la operacion: " + operacion);
+            return tipoPrimario.NULL;
+        }
     } else {
       errorNavideno("Tipos no compatibles en la operacion: " + operacion);
         return tipoPrimario.NULL;
@@ -486,7 +491,7 @@ RETORNO_BURRITO_SABANERO::= ENVIA_RETURN EXPRESION_BOTA:expr
                             tipoPrimario tipo = ((FabricarExpresion)expr).getTipado();
                             tipoPrimario retorno = funcionActual().getTipado(); 
                             if (retorno != tipo){
-                              errorNavideno("El tipo de retorno no coincide con el tipo de la funcion en la linea");
+                              errorNavideno("El tipo de retorno no coincide con el tipo de la funcion en la linea ");
                             }
                             else{
                               funcionActual().setRetorna(true);
@@ -520,8 +525,9 @@ DO_UNTIL_FANTASMA_PASADO::=
                       CODIGO_ENVOLTURA REVISA_UNTIL ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
                       {:
                       FabricarExpresion expresion = (FabricarExpresion)expr;
-                      if (expresion.getTipado() != tipoPrimario.BOOL){
-                        errorNavideno("La expresion del do-while no es booleana");
+                      
+                      if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
+                        errorNavideno("La expresion del do-Until no es booleana");
                       }
                       else{
                         
@@ -536,12 +542,12 @@ FOR_FANTASMA_PRESENTE::=
                         FIN_REGALO EXPRESION_BOTA:expr 
                         {:
                         FabricarExpresion expresion = (FabricarExpresion)expr;
-                        if (expresion.getTipado() != tipoPrimario.BOOL){
-                          errorNavideno("La expresion del for no es booleana");
-                        }
-                        else{
-                          
-                        }
+                      if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
+                        errorNavideno("La expresion del do-Until no es booleana");
+                      }
+                      else{
+                        
+                      }
                         :}
                         FIN_REGALO
                         {:
@@ -567,11 +573,11 @@ IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
                       {:
                       FabricarExpresion expresion = (FabricarExpresion)expr;
 
-                      if (expresion.getTipado() != tipoPrimario.BOOL){
-                        errorNavideno("La expresion del if no es booleana");
+                      if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
+                        errorNavideno("La expresion del do-Until no es booleana");
                       }
                       else{
-
+                        
                       }
                       :}
 
