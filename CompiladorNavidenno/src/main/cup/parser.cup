@@ -569,7 +569,7 @@ FOR_FANTASMA_PRESENTE::=
                       | ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST 
                       | ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST ELSE_SCROOGE;//if (a>b){} elif(){} else{}
 */
-IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO 
+OPT_ELSE::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr  
                       {:
                       FabricarExpresion expresion = (FabricarExpresion)expr;
 
@@ -581,17 +581,17 @@ IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
                       }
                       :}
 
-                        CODIGO_ENVOLTURA OPT_ELSE;
+                        CIERRE_CUENTO CODIGO_ENVOLTURA;
 
-OPT_ELSE::= /* Vacío para el caso de no tener else */
-          | ELSE_SCROOGE
-          | ELIF_BATMAN OPT_ELSE;
-
-
-ELIF_MULTI_JACK_FROST::= ELIF_BATMAN | ELIF_BATMAN ELIF_MULTI_JACK_FROST;
+IF_JUANITO_ESCARCHA::= OPT_ELSE 
+                      | OPT_ELSE ELSE_SCROOGE
+                      | OPT_ELSE ELIF_MULTI_JACK_FROST
+                      | OPT_ELSE ELIF_MULTI_JACK_FROST ELSE_SCROOGE;
 
 
-ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
+
+
+ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA:expr 
               {:
               FabricarExpresion expresion = (FabricarExpresion)expr;
                       if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
@@ -601,8 +601,10 @@ ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
                         
                       }
               :} 
-              CODIGO_ENVOLTURA;
-              
+              CIERRE_CUENTO CODIGO_ENVOLTURA;
+
+ELIF_MULTI_JACK_FROST::= ELIF_BATMAN |  ELIF_MULTI_JACK_FROST ELIF_BATMAN;     
+
 ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
 
 LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;

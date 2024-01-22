@@ -2,8 +2,8 @@ function main(){
     local int camilo|
 }
 function bool marioneta(){
-    local bool a|
-    local float b|
+    local bool a| @ esto se debe ignorar
+    local float b| /_ esto tambien se deberia ignorar _/
     local string z|
     do {} until (a===a)|
     do {} until (b===b)|
@@ -26,6 +26,15 @@ function int alexa(){
     local int c|
     if (a===a){}|
     if (a===b){}|
-    if (a===c){}|
+    if (a===c){}
+    else{}|
+
+    if (a===a){
+
+    }
+    elif (a===a){
+
+    }|
+    
     return a|
 }
