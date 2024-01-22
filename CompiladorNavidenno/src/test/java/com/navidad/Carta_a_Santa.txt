@@ -9,6 +9,7 @@ function bool marioneta(){
     do {} until (b===b)|
     do {} until (b===a)|
     do {} until (z)|
+    for(local int i<=1 | i==< 10 | i++ ){}
     return a|
 }
 
@@ -20,7 +21,7 @@ function int mario(){
     return a|
 }
 
-function int alexa(){
+function int alexa(int camilooooo, float mariooooooo){
     local int a|
     local float b|
     local int c|
