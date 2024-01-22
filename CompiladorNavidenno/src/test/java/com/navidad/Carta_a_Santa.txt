@@ -22,7 +22,10 @@ function int mario(){
 
 function int alexa(){
     local int a|
+    local float b|
+    local int c|
     if (a===a){}|
-    else{}
+    if (a===b){}|
+    if (a===c){}|
     return a|
 }

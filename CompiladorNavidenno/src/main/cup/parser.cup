@@ -543,7 +543,7 @@ FOR_FANTASMA_PRESENTE::=
                         {:
                         FabricarExpresion expresion = (FabricarExpresion)expr;
                       if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
-                        errorNavideno("La expresion del do-Until no es booleana");
+                        errorNavideno("La expresion del for no es booleana");
                       }
                       else{
                         
@@ -574,7 +574,7 @@ IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
                       FabricarExpresion expresion = (FabricarExpresion)expr;
 
                       if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
-                        errorNavideno("La expresion del do-Until no es booleana");
+                        errorNavideno("La expresion del if no es booleana");
                       }
                       else{
                         
@@ -594,14 +594,15 @@ ELIF_MULTI_JACK_FROST::= ELIF_BATMAN | ELIF_BATMAN ELIF_MULTI_JACK_FROST;
 ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
               {:
               FabricarExpresion expresion = (FabricarExpresion)expr;
-              if (expresion.getTipado() != tipoPrimario.BOOL){
-                errorNavideno("La expresion del elif no es booleana");
-              }
-              else{
-                
-              }
+                      if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
+                        errorNavideno("La expresion del elif no es booleana");
+                      }
+                      else{
+                        
+                      }
               :} 
               CODIGO_ENVOLTURA;
+              
 ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
 
 LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;

@@ -1507,7 +1507,7 @@ public void exportarTablaSimbolosHTML() {
 
                         FabricarExpresion expresion = (FabricarExpresion)expr;
                       if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
-                        errorNavideno("La expresion del do-Until no es booleana");
+                        errorNavideno("La expresion del for no es booleana");
                       }
                       else{
                         
@@ -1576,7 +1576,7 @@ public void exportarTablaSimbolosHTML() {
                       FabricarExpresion expresion = (FabricarExpresion)expr;
 
                       if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
-                        errorNavideno("La expresion del do-Until no es booleana");
+                        errorNavideno("La expresion del if no es booleana");
                       }
                       else{
                         
@@ -1654,12 +1654,12 @@ public void exportarTablaSimbolosHTML() {
 		Object expr = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
               FabricarExpresion expresion = (FabricarExpresion)expr;
-              if (expresion.getTipado() != tipoPrimario.BOOL){
-                errorNavideno("La expresion del elif no es booleana");
-              }
-              else{
-                
-              }
+                      if (expresion.getTipado() == tipoPrimario.NULL ||  !ARR_INT_FLOAT_BOOL.contains(expresion.getTipado())){
+                        errorNavideno("La expresion del elif no es booleana");
+                      }
+                      else{
+                        
+                      }
               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$7",36, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
