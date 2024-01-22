@@ -6,10 +6,20 @@ function float mario(){
     local float m|
     local float n|
     local int a|
-    return a|
+    if (a===a){
+
+    }|
+    return m|
 }
 
 function bool silvia(){
     local bool b|
+    if (b===b){
+
+    }|
+
+    
+
+    
     return b|
 }

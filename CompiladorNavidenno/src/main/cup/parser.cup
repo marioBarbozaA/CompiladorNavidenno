@@ -92,12 +92,27 @@ action code {:
     }
 }
     public tipoPrimario validarTipadoParaExpresiones(Object n, Object m, String operacion, ArrayList<tipoPrimario> tiposPermitidos) {
-
         FabricarExpresion expresionN = (FabricarExpresion)n;
         FabricarExpresion expresionM = (FabricarExpresion)m;
         return validarTipado(operacion, expresionN, expresionM, tiposPermitidos);
     }
-    
+
+    public void validarExpresionIf(Object expr) {
+      FabricarExpresion expresion = (FabricarExpresion)expr;
+      if (expresion.getTipado() != tipoPrimario.BOOL){
+          errorNavideno("La expresion del no es booleana");
+      }
+      else{
+          // Aquí puedes agregar el código que se ejecutará si la expresión es booleana
+      }
+    }
+
+    public FabricarExpresion getMyResult(Object n, Object m, String operacion, tipoPrimario tipo){
+      FabricarExpresion expresionN = (FabricarExpresion)n;
+      FabricarExpresion expresionM = (FabricarExpresion)m;
+      return new FabricarExpresion(expresionN.getValor().toString() + operacion + expresionM.getValor().toString(), tipo);
+    }
+
     public void imprimirTablasSimbolos(){
       for (String key : listaTablasSimbolos.keySet()) {
         System.out.println("Tabla de simbolos: " + key);
@@ -311,7 +326,7 @@ non terminal LINEAS_LAZOS, LINEA_LAZO;
 non terminal ASIGNACION_GORRO;
 // flujo de control
 non terminal RETORNO_BURRITO_SABANERO, DO_UNTIL_FANTASMA_PASADO, FOR_FANTASMA_PRESENTE, CALL_FUNCTION_FANTASMA_FUTURO;
-non terminal IF_JUANITO_ESCARCHA, ELIF_BATMAN, ELIF_MULTI_JACK_FROST, ELSE_SCROOGE; // SI, BATMAN ES UNA PELI NAVIDEÑA ;)
+non terminal IF_JUANITO_ESCARCHA, ELIF_BATMAN, ELIF_MULTI_JACK_FROST, ELSE_SCROOGE, OPT_ELSE; // SI, BATMAN ES UNA PELI NAVIDEÑA ;)
 //expresiones 
 non terminal EXPRESION_BOTA; 
 
@@ -540,14 +555,47 @@ FOR_FANTASMA_PRESENTE::=
 
                         CIERRE_CUENTO CODIGO_ENVOLTURA; // for (a <= 0| a < 10| ++a){}
 
-IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA 
-                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELSE_SCROOGE 
-                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST 
-                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST ELSE_SCROOGE;//if (a>b){} elif(){} else{}
+
+/*IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO  EXPRESION_BOTA:expr CIERRE_CUENTO
+
+                       CODIGO_ENVOLTURA 
+                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO CODIGO_ENVOLTURA ELSE_SCROOGE 
+                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST 
+                      | ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO CODIGO_ENVOLTURA ELIF_MULTI_JACK_FROST ELSE_SCROOGE;//if (a>b){} elif(){} else{}
+*/
+IF_JUANITO_ESCARCHA::= ELFO_IF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO 
+                      {:
+                      FabricarExpresion expresion = (FabricarExpresion)expr;
+
+                      if (expresion.getTipado() != tipoPrimario.BOOL){
+                        errorNavideno("La expresion del if no es booleana");
+                      }
+                      else{
+
+                      }
+                      :}
+
+                        CODIGO_ENVOLTURA OPT_ELSE;
+
+OPT_ELSE::= /* Vacío para el caso de no tener else */
+          | ELSE_SCROOGE
+          | ELIF_BATMAN OPT_ELSE;
 
 
 ELIF_MULTI_JACK_FROST::= ELIF_BATMAN | ELIF_BATMAN ELIF_MULTI_JACK_FROST;
-ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA CIERRE_CUENTO CODIGO_ENVOLTURA;
+
+
+ELIF_BATMAN::= HADA_ELIF ABRE_CUENTO EXPRESION_BOTA:expr CIERRE_CUENTO
+              {:
+              FabricarExpresion expresion = (FabricarExpresion)expr;
+              if (expresion.getTipado() != tipoPrimario.BOOL){
+                errorNavideno("La expresion del elif no es booleana");
+              }
+              else{
+                
+              }
+              :} 
+              CODIGO_ENVOLTURA;
 ELSE_SCROOGE::= DUENDE_ELSE CODIGO_ENVOLTURA;
 
 LINEAS_LAZOS::= LINEA_LAZO | LINEAS_LAZOS LINEA_LAZO;
@@ -623,32 +671,39 @@ ARRAY_OPERATION_CASCABEL::= GRINCH_DECREMENT ELEMENTO_ARRAY_DULCE | QUIEN_INCREM
 EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_SUMA, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_SUMA, tipo_res);
                         :}
                         | EXPRESION_BOTA:n TRUENO_DECREASE EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_RESTA, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_RESTA, tipo_res);
                         :}
                         | EXPRESION_BOTA:n RELAMPAGO_INT_DIVISION EXPRESION_BOTA:m 
 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_INT, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_DIVISION_INT, tipo_res);
                         :}
 
                         | EXPRESION_BOTA:n RAYO_FLOAT_DIVISION EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIVISION_FLOAT, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_DIVISION_FLOAT, tipo_res);
                         :}
                         | EXPRESION_BOTA:n SALTARIN_ELEVATE EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_POWER, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_POWER, tipo_res);
                         :}
                         | EXPRESION_BOTA:n COMETA_PRODUCT EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MULTIPLICACION, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_MULTIPLICACION, tipo_res);
                         :}
                         | EXPRESION_BOTA:n CUPIDO_MODULE EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MODULO, ARR_INT_FLOAT);
+                          RESULT = getMyResult(n, m, S_MODULO, tipo_res);
                         :}
                         | GRINCH_DECREMENT PERSONA
 
@@ -659,35 +714,43 @@ EXPRESION_ARIT_REGALOPRIN::= EXPRESION_BOTA:n RODOLFO_SUM EXPRESION_BOTA:m
 EXPRESION_REL_REGALO_COMPRADO::= EXPRESION_BOTA:n ELFO_GREATER EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_MAYOR_QUE, tipo_res);
                         :}
                         | EXPRESION_BOTA:n ELFO_LESS EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_MENOR_QUE, tipo_res);
                         :}
                         | EXPRESION_BOTA:n ELFO_EQUAL EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_IGUAL_QUE, tipo_res);
                         :}
 
                         | EXPRESION_BOTA:n ELFO_NOT_EQUAL EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DIFERENTE_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_DIFERENTE_QUE, tipo_res);
                         :}
                         | EXPRESION_BOTA:n ELFO_GREATER_EQUAL EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MAYOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_MAYOR_IGUAL_QUE, tipo_res);
                         :}
                         | EXPRESION_BOTA:n ELFO_LESS_EQUAL EXPRESION_BOTA:m // a <== b
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_MENOR_IGUAL_QUE, ARR_INT_FLOAT_BOOL);
+                          RESULT = getMyResult(n, m, S_MENOR_IGUAL_QUE, tipo_res);
                         :};
 
 EXPRESION_LOG_REGALO_MANUAL::= EXPRESION_BOTA:n REY_MELCHOR_COJUNCTION EXPRESION_BOTA:m 
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_CONJUNCION, ARR_BOOL);
+                          RESULT = getMyResult(n, m, S_CONJUNCION, tipo_res);
                         :}
                         | EXPRESION_BOTA:n REY_GASPAR_DISJUNCTION EXPRESION_BOTA:m
                         {:
                           tipoPrimario tipo_res = validarTipadoParaExpresiones(n, m, S_DISJUNCION, ARR_BOOL);
+                          RESULT = getMyResult(n, m, S_DISJUNCION, tipo_res);
                         :}
                         | REY_BALTASAR_NOT EXPRESION_BOTA; // !a  
